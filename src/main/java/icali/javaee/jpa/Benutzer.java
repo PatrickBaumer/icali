@@ -58,49 +58,24 @@ public class Benutzer implements Serializable{
     @Column(name = "PASSWORD_HASH", length = 64)
     @NotNull(message = "Das Passwort darf nicht leer sein.")
     private String passwordHash;
-
-    @ElementCollection
-    @CollectionTable(
-            name = "MINIMARKT_USER_GROUP",
-            joinColumns = @JoinColumn(name = "USERNAME")
-    )
+   
+//    Prüfen ob notwendig    
+//    @ElementCollection
+//    @CollectionTable(
+//            name = "ICALI_USER_GROUP",
+//            joinColumns = @JoinColumn(name = "USERNAME")
+//    )
     @Column(name = "GROUPNAME")
     List<String> groups = new ArrayList<>();
     
     @Column (name = "VUNNAME")
     @NotNull(message = "Vor- und Nachname darf nicht leer sein.")
     private String vunname;
-    
-    @Column (name = "ANSCHRIFT")
-    @NotNull (message = "Straße und Hausnummer dürfen nicht leer sein.")
-    private String anschrift;
-    
-    @Column (name = "PLZ")
-    @Pattern (regexp = "[0-9]{5}")
-    @NotNull (message = "Postleitzahl darf nicht leer sein.")
-    private String plz;
-    
-    @Column (name = "ORT")
-    @NotNull (message = "Ort darf nicht leer sein.")
-    private String ort;
-    
-    @Column (name = "TELEFON")
-    @Pattern (regexp = "[0-9]*")
-    @NotNull (message = "Telefonnummer darf nicht leer sein.")
-    private String telefon;
-    
+     
     @Column (name = "EMAIL")
     @Pattern(regexp = "(\\w|\\W)*@(\\w|\\W)*.(\\w|\\W){1,4}", message ="Die E-Mail muss muster@muster.de")
     @NotNull (message = "E-Mail-Adresse darf nicht leer sein.")
     private String email;
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
-    }
 
     public String getEmail() {
         return email;
@@ -118,49 +93,21 @@ public class Benutzer implements Serializable{
         this.vunname = vunname;
     }
 
-    public String getAnschrift() {
-        return anschrift;
-    }
-
-    public void setAnschrift(String anschrift) {
-        this.anschrift = anschrift;
-    }
-
-    public String getPlz() {
-        return plz;
-    }
-
-    public void setPlz(String plz) {
-        this.plz = plz;
-    }
-
-    public String getOrt() {
-        return ort;
-    }
-
-    public void setOrt(String ort) {
-        this.ort = ort;
-    }
-
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public User() {
+    public Benutzer() {
     }
 
-    public User(String username, String password) {
+    public Benutzer(String username, String password) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
     }
     
-     public User(String username, String password, String vunname, String anschrift, String plz, String ort, String telefon, String email) {
+     public Benutzer(String username, String password, String vunname, String email) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
         this.vunname = vunname;
-        this.anschrift = anschrift;
-        this.plz = plz;
-        this.ort = ort;
-        this.telefon = telefon;
         this.email = email;
     }
     //</editor-fold>
@@ -174,13 +121,7 @@ public class Benutzer implements Serializable{
         this.username = id;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
+   
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Passwort setzen und prüfen">
@@ -247,6 +188,8 @@ public class Benutzer implements Serializable{
     /**
      * @return Eine unveränderliche Liste aller Benutzergruppen
      */
+    
+//    PRÜFEN OB NOTWENDIG
     public List<String> getGroups() {
         List<String> groupsCopy = new ArrayList<>();
 
@@ -280,4 +223,4 @@ public class Benutzer implements Serializable{
 
 }
 
-}
+
