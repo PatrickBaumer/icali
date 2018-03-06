@@ -40,9 +40,9 @@ public class Termin implements Serializable{
     @TableGenerator(name = "termin_id", initialValue = 0)
     private Long terminId;
     
-    @Column(name = "t_name")
+    @Column(name = "t_titel")
     @NotNull(message = "Bitte geben Sie einen Terminnnamen ein")
-    private Time terminName;
+    private Time terminTitel;
     
     @Column(name = "t_ort")
     @NotNull(message = "Bitte einen Ort angeben")
@@ -75,8 +75,11 @@ public class Termin implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     Kalender terminInKalender = null;
     
-    @OneToOne
+    @OneToOne(mappedBy = "terminList")
     Benutzer ersteller = null;
+    
+    @OneToOne (mappedBy = "katkategorieTermin")
+    Kategorie terminKartegorie = null;  
     
     
     

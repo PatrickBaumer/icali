@@ -65,6 +65,11 @@ public class Kalender implements Serializable{
     @ManyToMany(mappedBy = "kalenderList")
     private List<Benutzer> benutzerList = new ArrayList<>();
     
+    @OneToMany(mappedBy = "kategorieKalender")
+    List<Kategorie> kalenderKategorie = new ArrayList<>();
+    
+    
+    
     
     
     
