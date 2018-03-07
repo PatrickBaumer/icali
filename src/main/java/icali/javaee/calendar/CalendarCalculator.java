@@ -12,16 +12,51 @@ import java.util.GregorianCalendar;
  *
  * @author x7
  */
+/**
+ * Jannuar ist 0 -> Dezemeber 11 bei Month
+ * Sonntag ist 1 -> Samstag ist 7 bei Day of Week
+ */
 public class CalendarCalculator {
     
-    CurrentDate date;
-    CurrentTime time;
+    Date date;
+    Time time;
+    Calendar calendar;
     
     public CalendarCalculator(){
         
-        Calendar calendar = new GregorianCalendar();
-        date = new CurrentDate(calendar);
-        time = new CurrentTime(calendar);
+        calendar = new GregorianCalendar();
+        date = new Date(calendar);
+        time = new Time(calendar);
     
+    }
+    
+    public int nextWeek(){
+        calendar.add(Calendar.WEEK_OF_YEAR, +1);
+        return date.getWeekOfYear();
+    }
+    
+    public int nextMonth(){
+        calendar.add(Calendar.MONTH, +1);
+        return date.getMonth();
+    }
+    
+    public int nextYear(){
+        calendar.add(Calendar.YEAR, +1);
+        return date.getMonth();
+    }
+    
+    public int lastWeek(){
+        calendar.add(Calendar.WEEK_OF_YEAR, -1);
+        return date.getWeekOfYear();
+    }
+    
+    public int lastMonth(){
+        calendar.add(Calendar.MONTH, -1);
+        return date.getMonth();
+    }
+    
+    public int lastYear(){
+        calendar.add(Calendar.YEAR, -1);
+        return date.getMonth();
     }
 }

@@ -12,30 +12,30 @@ import java.util.GregorianCalendar;
  *
  * @author x7
  */
-public class CurrentDate {
+public class Date {
     
     Calendar calendar;
     
-    public CurrentDate(Calendar calendar){
+    public Date(Calendar calendar){
         this.calendar = calendar;
     }
     
-    public int getCurrentYear(){
+    public int getYear(){
         return calendar.get(Calendar.YEAR);
     }
-    public int getCurrentMonth(){
+    public int getMonth(){
         return calendar.get(Calendar.MONTH); // Jan = 0, not 1
     }
-    public int getCurrentDayOfMonth(){
+    public int getDayOfMonth(){
         return calendar.get(Calendar.DAY_OF_MONTH); // Jan = 0, not 1 
     }
-    public int getCurrentDayOfWeek(){
+    public int getDayOfWeek(){
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
-    public int getCurrentWeekOfYear(){
+    public int getWeekOfYear(){
         return calendar.get(Calendar.WEEK_OF_YEAR);
     }
-    public int getCurrentWeekOfMonth(){
+    public int getWeekOfMonth(){
         return calendar.get(Calendar.WEEK_OF_MONTH);
     }
 

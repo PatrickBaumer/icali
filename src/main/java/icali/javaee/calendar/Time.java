@@ -11,27 +11,27 @@ import java.util.Calendar;
  *
  * @author x7
  */
-public class CurrentTime {
+public class Time {
     
     Calendar calendar;
     
-    public CurrentTime(Calendar calendar){
+    public Time(Calendar calendar){
         this.calendar = calendar;
     }
     
-    public int getCurrentHour(){
+    public int getHour(){
         return calendar.get(Calendar.HOUR);        // 12 hour clock
     }
-    public int getCurrentHourOfDay(){
+    public int getHourOfDay(){
         return calendar.get(Calendar.HOUR_OF_DAY); // 24 hour clock
     }
-    public int getCurrentMinute(){
+    public int getMinute(){
         return calendar.get(Calendar.MINUTE);
     }
-    public int getCurrentSecond(){
+    public int getSecond(){
         return calendar.get(Calendar.SECOND);
     }
-    public int getCurrentMilliescond(){
+    public int getMilliescond(){
         return calendar.get(Calendar.MILLISECOND);
     }
 }
