@@ -15,23 +15,23 @@ public class Time {
     
     Calendar calendar;
     
-    public Time(Calendar calendar){
+    protected Time(Calendar calendar){
         this.calendar = calendar;
     }
     
-    public int getHour(){
+    protected int getHour(){
         return calendar.get(Calendar.HOUR);        // 12 hour clock
     }
-    public int getHourOfDay(){
+    protected int getHourOfDay(){
         return calendar.get(Calendar.HOUR_OF_DAY); // 24 hour clock
     }
-    public int getMinute(){
+    protected int getMinute(){
         return calendar.get(Calendar.MINUTE);
     }
-    public int getSecond(){
+    protected int getSecond(){
         return calendar.get(Calendar.SECOND);
     }
-    public int getMilliescond(){
+    protected int getMilliescond(){
         return calendar.get(Calendar.MILLISECOND);
     }
 }

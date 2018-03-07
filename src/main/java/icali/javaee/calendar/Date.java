@@ -6,7 +6,6 @@
 package icali.javaee.calendar;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -16,26 +15,26 @@ public class Date {
     
     Calendar calendar;
     
-    public Date(Calendar calendar){
+    protected Date(Calendar calendar){
         this.calendar = calendar;
     }
     
-    public int getYear(){
+    protected int getYear(){
         return calendar.get(Calendar.YEAR);
     }
-    public int getMonth(){
+    protected int getMonth(){
         return calendar.get(Calendar.MONTH); // Jan = 0, not 1
     }
-    public int getDayOfMonth(){
+    protected int getDayOfMonth(){
         return calendar.get(Calendar.DAY_OF_MONTH); // Jan = 0, not 1 
     }
-    public int getDayOfWeek(){
+    protected int getDayOfWeek(){
         return calendar.get(Calendar.DAY_OF_WEEK);
     }
-    public int getWeekOfYear(){
+    protected int getWeekOfYear(){
         return calendar.get(Calendar.WEEK_OF_YEAR);
     }
-    public int getWeekOfMonth(){
+    protected int getWeekOfMonth(){
         return calendar.get(Calendar.WEEK_OF_MONTH);
     }
 
