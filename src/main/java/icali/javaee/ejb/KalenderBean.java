@@ -11,9 +11,9 @@ import icali.javaee.jpa.Kalender;
  *
  * @author x7
  */
-public class KalendarBean extends EntityBean<Kalender, Long>{
+public class KalenderBean extends EntityBean<Kalender, Long>{
     
-    public KalendarBean() {
+    public KalenderBean() {
         super(Kalender.class);
     }
     
