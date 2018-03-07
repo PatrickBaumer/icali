@@ -5,97 +5,74 @@
  */
 package icali.javaee.calendar;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 /**
  *
  * @author x7
  */
-/**
- * Jannuar ist 0 -> Dezemeber 11 bei Month
- * Sonntag ist 1 -> Samstag ist 7 bei Day of Week
- */
 public class CalendarAPI {
     
-    Date date;
-    Time time;
-    Calendar calendar;
+    LocalDate date;
+    LocalTime time;
     
     public CalendarAPI(){
         
-        calendar = new GregorianCalendar();
-        date = new Date(calendar);
-        time = new Time(calendar);
+        date =  LocalDate.now();
+        time = LocalTime.now();
     
     }
     
-// Date getter
-    public int getYear(){
-        return date.getYear();
-    }
-    public int getMonth(){
-        return date.getMonth();
-    }
-    public int getDayOfMonth(){
-        return date.getDayOfMonth();
-    }
-    public int getDayOfWeek(){
-        return date.getDayOfWeek();
-    }
-    public int getWeekOfYear(){
-        return date.getWeekOfYear();
-    }
-    public int getWeekOfMonth(){
-        return date.getWeekOfMonth();
+    public LocalDate getCurrentLocalDate(){
+        return LocalDate.now();
     }
     
-    // Date manipulation
+    public LocalTime getCurrentLocalTime(){
+        return LocalTime.now();
+    }
+    
+    public LocalDate getLocalDate(){
+        return date;
+    }
+    
+    public LocalTime getLocalTime(){
+        return time;
+    }
+    
+    // LocalDate manipulation
     public int nextWeek(){
-        calendar.add(Calendar.WEEK_OF_YEAR, +1);
-        return date.getWeekOfYear();
+        date = date.plusWeeks(1);
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return date.get(weekFields.weekOfYear());
     }
     
     public int nextMonth(){
-        calendar.add(Calendar.MONTH, +1);
-        return date.getMonth();
+        date = date.plusMonths(1);
+        return date.getMonthValue();
     }
     
     public int nextYear(){
-        calendar.add(Calendar.YEAR, +1);
-        return date.getMonth();
+        date = date.plusYears(1);
+        return date.getYear();
     }
     
     public int lastWeek(){
-        calendar.add(Calendar.WEEK_OF_YEAR, -1);
-        return date.getWeekOfYear();
+        date = date.minusWeeks(1);
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return date.get(weekFields.weekOfYear());
     }
     
     public int lastMonth(){
-        calendar.add(Calendar.MONTH, -1);
-        return date.getMonth();
+        date = date.minusMonths(1);
+        return date.getMonthValue();
     }
     
     public int lastYear(){
-        calendar.add(Calendar.YEAR, -1);
-        return date.getMonth();
+        date = date.minusYears(1);
+        return date.getYear();
     }
     
-    //Time getter
-    
-    public int getHour(){
-        return time.getHour();      
-    }
-    public int getHourOfDay(){
-        return time.getHourOfDay();
-    }
-    public int getMinute(){
-        return time.getMinute();
-    }
-    public int getSecond(){
-        return time.getSecond();
-    }
-    public int getMilliescond(){
-        return time.getMilliescond();
-    }
 }
