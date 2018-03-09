@@ -37,6 +37,23 @@ import javax.validation.constraints.Size;
 public class Benutzer implements Serializable{
     
         private static final long serialVersionUID = 1L;
+
+    public Benutzer(String username, String passwordHash, String vunname, String email) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.vunname = vunname;
+        this.email = email;
+    }
+    public Benutzer(String username, String passwordHash, String vunname) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.vunname = vunname;
+       
+    }
+        public Benutzer(String username, String passwordHash) {
+        this.username = username;
+        this.passwordHash = passwordHash;       
+    }
         
     @Id
     @GeneratedValue(generator = "benutzer_ID")
