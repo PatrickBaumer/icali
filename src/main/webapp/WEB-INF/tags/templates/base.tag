@@ -3,7 +3,7 @@
     Created on : 02.03.2018, 11:19:02
     Author     : Patrick Baumer
 --%>
-
+<%@tag pageEncoding="UTF-8"%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <%-- Menü --%>
+            <%-- MenÃ¼ --%>
             <div id="menubar">
                 <jsp:invoke fragment="menu"/>
 
@@ -47,6 +47,7 @@
                     </div>
                 </c:if>
             </div>
+             
         </header>
     <body>
         

@@ -16,7 +16,7 @@
 <c:set var="base_url" value="<%=request.getContextPath()%>" />
 
 <template:base>
-    <jsp:attribute name="title">
+    <jsp:attribute name="titleSeite">
         Registrierung
     </jsp:attribute>
 

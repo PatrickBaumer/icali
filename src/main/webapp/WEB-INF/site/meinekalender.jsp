@@ -9,7 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<template:basis>
+<template:base>
     <jsp:attribute name="title">
         Meine Kalender
     </jsp:attribute>
@@ -30,4 +30,4 @@
         </jsp:attribute>
         
         
-</template:basis>
+</template:base>
