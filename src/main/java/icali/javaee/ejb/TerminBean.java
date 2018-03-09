@@ -6,11 +6,15 @@
 package icali.javaee.ejb;
 
 import icali.javaee.jpa.Termin;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author x7
  */
+@Stateless
+@RolesAllowed("icali-app-user")
 public class TerminBean extends EntityBean<Termin, Long> {
     
     public TerminBean() {

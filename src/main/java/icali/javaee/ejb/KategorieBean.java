@@ -6,11 +6,15 @@
 package icali.javaee.ejb;
 
 import icali.javaee.jpa.Kategorie;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author x7
  */
+@Stateless
+@RolesAllowed("icali-app-user")
 public class KategorieBean extends EntityBean<Kategorie, String>{
     
     public KategorieBean() {
