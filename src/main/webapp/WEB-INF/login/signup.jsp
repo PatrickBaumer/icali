@@ -26,7 +26,7 @@
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/logout/"/>">Einloggen</a>
+            <a href="<c:url value="../site/meinekalender/"/>">Einloggen</a>
         </div>
     </jsp:attribute>
 
@@ -62,7 +62,8 @@
                         <input type="password" name="signup_password2" value="${signup_form.values["signup_password2"][0]}">
                     </div>
                     <%-- ANSCHRIFT--%>
-                    <div><h2>Anschrift</h2></div>
+                    <!--
+                    <div><h2>Benutzername</h2></div>
                     <label for="signup_vunname">
                         Vor- und Nachname:
                         <span class="required">*</span>
@@ -70,36 +71,7 @@
                     <div class="side-by-side">
                         <input type="text" name="signup_vunname" value="${signup_form.values["signup_vunname"][0]}">
                     </div>
-                    
-                    <label for="signup_anschrift">
-                        Straße und Hausnummer:
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="text" name="signup_anschrift" value="${signup_form.values["signup_anschrift"][0]}">
-                    </div>
-                    <label for="signup_plz">
-                        Postleitzahl und Ort:
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="text" name="signup_plz" value="${signup_form.values["signup_plz"][0]}">
-
-                        <input type="text" name="signup_ort" value="${signup_form.values["signup_ort"][0]}">
-                    </div>
-
-                    <%-- KONTAKTDATEN --%>
-                    <div><h2>Kontaktdaten</h2></div>
-                    
-                    
-                    <label for="signup_telefon">
-                        Telefon:
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                        <input type="text" name="signup_telefon" value="${signup_form.values["signup_telefon"][0]}">
-                    </div>
-                    
+                    -->
                     <label for="signup_email">
                         E-Mail:
                         <span class="required">*</span>
@@ -107,23 +79,25 @@
                     <div class="side-by-side">
                         <input type="text" name="signup_email" value="${signup_form.values["signup_email"][0]}">
                     </div>
-                                        <%-- Button zum Abschicken --%>
                     <div class="side-by-side">
                         <button class="icon-pencil" type="submit">
                             Registrieren
                         </button>
                     </div>
                 </div>
+                <%-- Button zum Abschicken --%>
 
-                <%-- Fehlermeldungen --%>
-                <c:if test="${!empty signup_form.errors}">
-                    <ul class="errors">
-                        <c:forEach items="${signup_form.errors}" var="error">
-                            <li>${error}</li>
-                            </c:forEach>
-                    </ul>
-                </c:if>
-            </form>
         </div>
-    </jsp:attribute>
+
+        <%-- Fehlermeldungen --%>
+        <c:if test="${!empty signup_form.errors}">
+            <ul class="errors">
+                <c:forEach items="${signup_form.errors}" var="error">
+                    <li>${error}</li>
+                    </c:forEach>
+            </ul>
+        </c:if>
+    </form>
+</div>
+</jsp:attribute>
 </template:base>
