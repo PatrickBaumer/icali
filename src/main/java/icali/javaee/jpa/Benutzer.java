@@ -52,7 +52,8 @@ public class Benutzer implements Serializable{
     }
         public Benutzer(String username, String passwordHash) {
         this.username = username;
-        this.passwordHash = passwordHash;       
+        this.passwordHash = passwordHash;
+        //sdasd
     }
         
     @Id
