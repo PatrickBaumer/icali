@@ -33,7 +33,7 @@
                     iCali
                 </div>
                 <div class="content">
-                    ${title}
+                    ${titleSeite}
                 </div>
             </div>
 

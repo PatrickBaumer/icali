@@ -29,7 +29,7 @@
             Geschützter Bereich für angemeldete Benutzer
         </display-name>
         <!--
-            Alle URLs beginnend mit /app/ schützen
+            Alle URLs beginnend mit /site/ schützen
         -->
         <web-resource-collection>
             <web-resource-name>icali</web-resource-name>
@@ -37,7 +37,7 @@
         </web-resource-collection>
         
         <!--
-            Ein Benutzer muss die Rolle "minimarkt-app-user" besitzen, um die
+            Ein Benutzer muss die Rolle "icali-app-user" besitzen, um die
             Seiten aufrufen zu können.
         -->
         <auth-constraint>
