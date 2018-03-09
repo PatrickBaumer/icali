@@ -131,9 +131,8 @@ public class CalendarAPI {
     public Map<Integer, String> monthRepresentation(LocalDate localDate){
         Map<Integer, String> monthMap = new TreeMap<>();
         int month =localDate.getMonthValue();
-        int year = localDate.getYear();
         for(int i =1; i<=localDate.lengthOfMonth(); i++){
-            LocalDate dayOfMonth = LocalDate.of(year, month, i);
+            LocalDate dayOfMonth = LocalDate.of(localDate.getYear(), month, i);
             monthMap.put(i, dayOfMonth.getDayOfWeek().name());
         }
         return monthMap; 
