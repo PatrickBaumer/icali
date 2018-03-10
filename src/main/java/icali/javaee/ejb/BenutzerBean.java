@@ -8,6 +8,10 @@ package icali.javaee.ejb;
 import icali.javaee.jpa.Benutzer;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.EJBContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.annotation.Resource;
 
 /**
  *
@@ -15,32 +19,57 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @RolesAllowed("icali-app-user")
-public class BenutzerBean extends EntityBean<Benutzer, Long>{
-    
+public class BenutzerBean extends EntityBean<Benutzer, Long> {
+
+    @PersistenceContext
+    EntityManager em;
+
+    @Resource
+    EJBContext ctx;
+
     public BenutzerBean() {
         super(Benutzer.class);
     }
-    
-        public void signup(String username, String password) throws UserAlreadyExistsException {
+
+    public Benutzer getCurrentBenutzer() {
+        return this.em.find(Benutzer.class, this.ctx.getCallerPrincipal().getName());
+    }
+
+    public void signup(String username, String password) throws UserAlreadyExistsException {
         if (em.find(Benutzer.class, username) != null) {
             throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", username));
         }
 
         Benutzer benutzer = new Benutzer(username, password);
-        //kalender.addToGroup("icali-app-user");<-------------- PRÜFEN
+        benutzer.addToGroup("icali-app-user");
         em.persist(benutzer);
     }
-        
-        public class UserAlreadyExistsException extends Exception {
+
+    public class UserAlreadyExistsException extends Exception {
 
         public UserAlreadyExistsException(String message) {
             super(message);
         }
     }
 
+    @RolesAllowed("icali-app-user")
+    public void changePassword(Benutzer benutzer, String oldPassword, String newPassword) throws InvalidCredentialsException {
+        if (benutzer == null || !benutzer.checkPassword(oldPassword)) {
+            throw new InvalidCredentialsException("Benutzername oder Passwort sind falsch.");
+        }
+
+        benutzer.setPassword(newPassword);
+    }
+
     /**
-     * Fehler: Das übergebene Passwort stimmt nicht mit dem des Benutzers
-     * überein
+     * @RolesAllowed("icali-app-user") public void changeBenutzerdaten (Benutzer
+     * benutzer, String vunname, String email) { benutzer.setVunname(vunname);
+     * benutzer.setEmail(email);
+     *
+     * }  
+     
+     
+     Was brauchen wir da noch?!*
      */
     public class InvalidCredentialsException extends Exception {
 
@@ -48,6 +77,6 @@ public class BenutzerBean extends EntityBean<Benutzer, Long>{
             super(message);
         }
     }
-
     
+
 }

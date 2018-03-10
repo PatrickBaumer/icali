@@ -6,7 +6,9 @@
 package icali.javaee.ejb;
 
 import icali.javaee.jpa.Termin;
+import icali.javaee.jpa.Kategorie;
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 import javax.ejb.Stateless;
 
 /**
@@ -16,9 +18,38 @@ import javax.ejb.Stateless;
 @Stateless
 @RolesAllowed("icali-app-user")
 public class TerminBean extends EntityBean<Termin, Long> {
-    
+
     public TerminBean() {
         super(Termin.class);
     }
+
+    public List<Termin> findByKalendarname(String kalendername) {
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminInKalender.kalenderTitel = :kalendername ORDER BY t.startDatum, t.startUhrzeit")
+                .setParameter("kalendername", kalendername)
+                .getResultList();
+    }
+
+    public List<Termin> findByTerminTitel(String terminTitel) {
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminTitel = :terminTitel ORDER BY t.startDatum, t.startUhrzeit")
+                .setParameter("terminTitel", terminTitel)
+                .getResultList();
+    }
     
+    public List<Termin> findByKalenderId(Long kalenderId) {
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminInKalender.kalenderId = :kalenderId ORDER BY t.startDatum, t.startUhrzeit")
+                .setParameter("kalenderId", kalenderId)
+                .getResultList();
+    }
+    
+    public List<Termin> findByKategorie (Kategorie terminKategorie){
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminKartegorie = :terminKategorie ORDER BY t.startDatum, t.startUhrzeit")
+                .setParameter("terminKategorie", terminKategorie)
+                .getResultList();
+    }
+    
+    public List<Termin> findByTerminId(Long terminId) {
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminId = :terminId ORDER BY t.startDatum, t.startUhrzeit")
+                .setParameter("terminId", terminId)
+                .getResultList();
+    }
 }

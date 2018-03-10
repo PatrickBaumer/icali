@@ -6,6 +6,7 @@
 package icali.javaee.ejb;
 
 import icali.javaee.jpa.Kategorie;
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 
@@ -15,10 +16,15 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @RolesAllowed("icali-app-user")
-public class KategorieBean extends EntityBean<Kategorie, String>{
-    
+public class KategorieBean extends EntityBean<Kategorie, String> {
+
     public KategorieBean() {
         super(Kategorie.class);
     }
+
+    public List<Kategorie> findAllSorted() {
+        return this.em.createQuery("SELECT c FROM Kategorie c ORDER BY c.kategorieName").getResultList();
+    }
+    
     
 }

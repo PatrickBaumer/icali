@@ -135,4 +135,36 @@ public class Benutzer implements Serializable{
     public boolean checkPassword(String password) {
         return this.passwordHash.equals(this.hashPassword(password));
     }
+    
+    
+    
+    public List<String> getGroups() {
+        List<String> groupsCopy = new ArrayList<>();
+
+        for(String groupname: this.groups) {
+            groupsCopy.add(groupname);
+        }
+
+        return groupsCopy;
+    }
+
+    /**
+     * Fügt den Benutzer einer weiteren Benutzergruppe hinzu.
+     *
+     * @param groupname Name der Benutzergruppe
+     */
+    public void addToGroup(String groupname) {
+        if (!this.groups.contains(groupname)) {
+            this.groups.add(groupname);
+        }
+    }
+
+    /**
+     * Entfernt den Benutzer aus der übergebenen Benutzergruppe.
+     *
+     * @param groupname Name der Benutzergruppe
+     */
+    public void removeFromGroup(String groupname) {
+        this.groups.remove(groupname);
+    }
 }
