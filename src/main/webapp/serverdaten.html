@@ -1,0 +1,14 @@
+Netbeans-> Services -> Galssfish -> ViewAdminConsole
+-> Configurations -> Security -> Realms -> neu anlegen
+und Daten eintragen
+
+JAAS Context:       jdbcRealm
+JNDI:               jdbc/__default
+User Table:         icali.icali_user
+User Name Column:   username
+Password Column:    password_hash
+Group Table:        icali.icali_user_group
+Group Table User Name Column:  username
+Group Name Column:  groupname
+Password Encryption Algorithm: SHA-256
+Assign Groups:      icali-app-user
