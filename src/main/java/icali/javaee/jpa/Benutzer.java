@@ -38,6 +38,9 @@ public class Benutzer implements Serializable{
     
         private static final long serialVersionUID = 1L;
 
+    public Benutzer() {
+    }
+
     public Benutzer(String username, String passwordHash, String vunname, String email) {
         this.username = username;
         this.passwordHash = passwordHash;
@@ -166,5 +169,37 @@ public class Benutzer implements Serializable{
      */
     public void removeFromGroup(String groupname) {
         this.groups.remove(groupname);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getVunname() {
+        return vunname;
+    }
+
+    public void setVunname(String vunname) {
+        this.vunname = vunname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

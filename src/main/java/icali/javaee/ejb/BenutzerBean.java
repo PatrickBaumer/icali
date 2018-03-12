@@ -13,12 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.annotation.Resource;
 
-/**
- *
- * @author x7
- */
+
 @Stateless
-@RolesAllowed("icali-app-user")
+//@RolesAllowed("icali-app-user")
 public class BenutzerBean extends EntityBean<Benutzer, Long> {
 
     @PersistenceContext
@@ -35,12 +32,12 @@ public class BenutzerBean extends EntityBean<Benutzer, Long> {
         return this.em.find(Benutzer.class, this.ctx.getCallerPrincipal().getName());
     }
 
-    public void signup(String username, String password) throws UserAlreadyExistsException {
+    public void signup(String username, String password, String vunname, String email) throws UserAlreadyExistsException {
         if (em.find(Benutzer.class, username) != null) {
             throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", username));
         }
 
-        Benutzer benutzer = new Benutzer(username, password);
+        Benutzer benutzer = new Benutzer(username, password, vunname, email);
         benutzer.addToGroup("icali-app-user");
         em.persist(benutzer);
     }

@@ -62,7 +62,6 @@
                         <input type="password" name="signup_password2" value="${signup_form.values["signup_password2"][0]}">
                     </div>
                     <%-- ANSCHRIFT--%>
-                    <!--
                     <div><h2>Benutzername</h2></div>
                     <label for="signup_vunname">
                         Vor- und Nachname:
@@ -71,7 +70,6 @@
                     <div class="side-by-side">
                         <input type="text" name="signup_vunname" value="${signup_form.values["signup_vunname"][0]}">
                     </div>
-                    -->
                     <label for="signup_email">
                         E-Mail:
                         <span class="required">*</span>

@@ -66,7 +66,7 @@ public class SignUpServlet extends HttpServlet {
                                                 
         
         // Eingaben prüfen
-        Benutzer user = new Benutzer(username, password1, vunname);
+        Benutzer user = new Benutzer(username, password1);
         List<String> errors = this.validationBean.validate(user);
         this.validationBean.validate(user.getPassword(), errors);
         
@@ -77,7 +77,7 @@ public class SignUpServlet extends HttpServlet {
         // Neuen Benutzer anlegen
         if (errors.isEmpty()) {
             try {
-                this.benutzerBean.signup(username, password1);
+                this.benutzerBean.signup(username, password1, vunname, email );
             } catch (BenutzerBean.UserAlreadyExistsException ex) {
                 errors.add(ex.getMessage());
             }
@@ -87,7 +87,7 @@ public class SignUpServlet extends HttpServlet {
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
             request.login(username, password1);
-            response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/"));  //!!!!!!!!!!!! PRÜFEN
+            response.sendRedirect(WebUtils.appUrl(request, "/site/meinekalender/"));  //!!!!!!!!!!!! PRÜFEN
         } else {
             // Fehler: Formuler erneut anzeigen
             FormValues formValues = new FormValues();
