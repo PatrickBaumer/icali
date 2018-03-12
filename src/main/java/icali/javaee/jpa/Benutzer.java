@@ -28,18 +28,17 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Patrick Baumer
  */
 @Entity
+@NoArgsConstructor
 public class Benutzer implements Serializable{
     
-        private static final long serialVersionUID = 1L;
-
-    public Benutzer() {
-    }
 
     public Benutzer(String username, String passwordHash, String vunname, String email) {
         this.username = username;
@@ -59,21 +58,23 @@ public class Benutzer implements Serializable{
         //sdasd
     }
         
+    private static final long serialVersionUID = 1L;
+    
+//    @Id
+//    @GeneratedValue(generator = "benutzer_ID")
+//    @TableGenerator(name = "benutzer_ID", initialValue = 0, allocationSize = 50)
+//    private long id;
+    
     @Id
-    @GeneratedValue(generator = "benutzer_ID")
-    @TableGenerator(name = "benutzer_ID", initialValue = 0, allocationSize = 50)
-    private long id;
-    
-    
     @Column(name = "USERNAME", length = 64)
     @Size(min = 5, max = 64, message = "Der Benutzername muss zwischen fünf und 64 Zeichen lang sein.")
     @NotNull(message = "Der Benutzername darf nicht leer sein.")
     private String username;
     
-    @ManyToMany(mappedBy = "benutzerList")
+    @ManyToMany (mappedBy = "benutzerList", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Kalender> kalenderList = new ArrayList<>();
     
-    @OneToMany
+    @OneToMany (mappedBy = "ersteller", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     List<Termin> terminList = new ArrayList<>();
     
   
@@ -171,13 +172,13 @@ public class Benutzer implements Serializable{
         this.groups.remove(groupname);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getUsername() {
         return username;

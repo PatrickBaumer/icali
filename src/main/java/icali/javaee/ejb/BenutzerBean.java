@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 
 
 @Stateless
-//@RolesAllowed("icali-app-user")
 public class BenutzerBean extends EntityBean<Benutzer, Long> {
 
     @PersistenceContext

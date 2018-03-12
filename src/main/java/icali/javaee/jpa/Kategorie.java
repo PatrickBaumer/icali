@@ -44,13 +44,11 @@ public class Kategorie implements Serializable{
     @NotNull(message = "Bitte eine Farbe hinterlegen")
     private Farbe kategorieFarbe;
     
-    @OneToOne(mappedBy = "terminKartegorie")
+    @OneToOne
     Termin katkategorieTermin = null;
     
     @ManyToOne(fetch = FetchType.LAZY)
     Kalender kategorieKalender =null;
-    
-    
     
     
 }

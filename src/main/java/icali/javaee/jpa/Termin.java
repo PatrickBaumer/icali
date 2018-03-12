@@ -75,7 +75,7 @@ public class Termin implements Serializable{
     @ManyToOne(fetch = FetchType.LAZY)
     Kalender terminInKalender = null;
     
-    @OneToOne(mappedBy = "terminList")
+    @OneToOne
     Benutzer ersteller = null;
     
     @OneToOne (mappedBy = "katkategorieTermin")

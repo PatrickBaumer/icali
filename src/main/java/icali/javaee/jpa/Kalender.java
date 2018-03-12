@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -51,7 +52,7 @@ public class Kalender implements Serializable{
     @Column(name = "k_titel")
     private String kalenderTitel;
     
-    @Column(name = "k_admin")
+    @OneToOne
     @NotNull(message = "Jede Gruppe braucht einen Führer")
     private Benutzer kalenderAdmin;
     
@@ -62,7 +63,7 @@ public class Kalender implements Serializable{
     @OneToMany(mappedBy = "terminInKalender")
     private List<Termin> terminList = new ArrayList<>();
   
-    @ManyToMany(mappedBy = "kalenderList")
+    @ManyToMany
     private List<Benutzer> benutzerList = new ArrayList<>();
     
     @OneToMany(mappedBy = "kategorieKalender")
