@@ -20,7 +20,7 @@
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/"/>">Meine Kalender</a>
+            <a href="<c:url value="/site/meinekalender/"/>">Meine Kalender</a>
         </div>
     </jsp:attribute>
         
