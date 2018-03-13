@@ -1,14 +1,18 @@
 <%-- 
-    Document   : basis
-    Created on : 02.03.2018, 11:19:02
-    Author     : Patrick Baumer
+    Copyright © 2018 Dennis Schulmeister-Zimolong
+
+    E-Mail: dhbw@windows3.de
+    Webseite: https://www.wpvs.de/
+
+    Dieser Quellcode ist lizenziert unter einer
+    Creative Commons Namensnennung 4.0 International Lizenz.
 --%>
 <%@tag pageEncoding="UTF-8"%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<%@attribute name="titleSeite"%>
+<%@attribute name="title"%>
 <%@attribute name="head" fragment="true"%>
 <%@attribute name="menu" fragment="true"%>
 <%@attribute name="content" fragment="true"%>
@@ -18,22 +22,24 @@
     <head>
         <meta charset="utf-8" />
 
-        <title>iCali ${titleSeite}</title>
+        <title>Aufgabenliste: ${title}</title>
 
+        <link rel="stylesheet" href="<c:url value="/fontello/css/fontello.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/main.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/form.css"/>" />
 
         <jsp:invoke fragment="head"/>
     </head>
-                <%-- Kopfbereich --%>
+    <body>
+        <%-- Kopfbereich --%>
         <header>
             <%-- Titelzeile --%>
             <div id="titlebar">
                 <div class="appname">
-                    iCali
+                    Aufgabenliste
                 </div>
                 <div class="content">
-                    ${titleSeite}
+                    ${title}
                 </div>
             </div>
 
@@ -47,17 +53,11 @@
                     </div>
                 </c:if>
             </div>
-             
         </header>
-    <body>
-        
-
 
         <%-- Hauptinhalt der Seite --%>
-          
         <main>    
             <jsp:invoke fragment="content"/>
         </main>
-  
     </body>
 </html>

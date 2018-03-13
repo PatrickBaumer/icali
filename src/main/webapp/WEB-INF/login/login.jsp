@@ -14,7 +14,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <template:base>
-    <jsp:attribute name="titleSeite">
+    <jsp:attribute name="title">
         Login
     </jsp:attribute>
 
@@ -50,9 +50,6 @@
                         Einloggen
                     </button>
                 </div>
-                    <div id="kalender">
-                        test
-                    </div>
             </form>
         </div>
     </jsp:attribute>

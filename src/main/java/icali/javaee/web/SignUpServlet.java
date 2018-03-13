@@ -86,8 +86,8 @@ public class SignUpServlet extends HttpServlet {
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-//            request.login(username, password1);
-            response.sendRedirect(WebUtils.appUrl(request, "/site/meinekalender/"));  //!!!!!!!!!!!! PRÜFEN
+            request.login(username, password1);
+            response.sendRedirect(WebUtils.appUrl(request, "/app/task_list.jsp/"));  //!!!!!!!!!!!! PRÜFEN
         } else {
             // Fehler: Formuler erneut anzeigen
             FormValues formValues = new FormValues();

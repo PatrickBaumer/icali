@@ -14,7 +14,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <template:base>
-    <jsp:attribute name="titleSeite">
+    <jsp:attribute name="title">
         Anmeldung nicht möglich
     </jsp:attribute>
 
