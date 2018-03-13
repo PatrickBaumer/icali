@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Manuel
  */
-@WebServlet(urlPatterns = {"/app/kalender/"})
+@WebServlet(urlPatterns = {"/icali/kalender/"})
 public class KalenderServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/app/task_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/app/main.jsp").forward(request, response);
 
     }
 }
