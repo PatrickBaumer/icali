@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Manuel
  */
-@WebServlet(urlPatterns = {"/icali/kalender/"})
+@WebServlet(urlPatterns = {"/app/kalender/"})
 public class KalenderServlet extends HttpServlet {
 
     @Override

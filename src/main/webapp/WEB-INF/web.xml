@@ -27,7 +27,7 @@
         -->
         <web-resource-collection>
             <web-resource-name>icali-app</web-resource-name>
-            <url-pattern>/icali/*</url-pattern>
+            <url-pattern>/app/*</url-pattern>
         </web-resource-collection>
         <!--
             Ein Benutzer muss die Rolle "todo-app-user" besitzen, um die
