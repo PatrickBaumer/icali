@@ -90,8 +90,25 @@ header, main {
     
 }
 #hauptfenster{
-    float: right;
+    float: center;
     display: inline-block;
+}
+.icon-erstelleTermin
+{width: 100%;
+margin-top: 0.5em;}
+.icon-erstellenKalender
+{width: 100%;
+margin-top: 0.5em;}
+.icon-hinzufuegenKalender
+{width: 100%;
+margin-top: 0.5em;}
+.icon-switch{width: 100%;
+ margin-top: 0.5em;}
+
+#m1{
+    width: 100%;
+    font-size: 100%;
+    margin-top: 0.5em;
 }
 
 /* Farben für Links */

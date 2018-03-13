@@ -31,29 +31,31 @@
             </div>
             <%--<c:if test=abfrage> --%>
             <div id="m2">
+                <form>
                 <table id="kalender">
                     <tr>
-                        <td>Kastenssymbol</td>
+                        <td><input type="checkbox" name="leer"></td>
                         <td>Meine Kalender</td>
                         <td>ID</td>
                     </tr>
                     
                     <tr>
-                        <td>Häkchen</td>
-                        <td>Kalender1</td>
-                        <td>123</td>    
+                        <td><input type="checkbox" name="leer"></td>
+                        <td>$_{KNamAausDB}</td>
+                        <td>$_{idAusDB}</td>    
                     </tr>
                     <tr></tr>
                 </table>
+                </form>
             </div>
             <%--</c:if>--%>
-               <div id="m2">
+            <div id="m2">
             <button class="icon-erstelleTermin" type="submit">neuen Termin erstellen   </button>
             </div>
-                  <div id="m3">
+            <div id="m3">
             <button class="icon-erstellenKalender" type="submit">neuen Kalender erstellen  </button>
             </div>
-                  <div id="m4">
+            <div id="m4">
             <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
             </div>
             
@@ -64,28 +66,7 @@
         <div id="hauptfenster">
         <%-- Suchfilter --%>
         <form method="GET" class="horizontal" id="search">
-            <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
-
-            <select name="search_category">
-                <option value="">Alle Kategorien</option>
-
-                <c:forEach items="${categories}" var="category">
-                    <option value="${category.id}" ${param.search_category == category.id ? 'selected' : ''}>
-                        <c:out value="${category.name}" />
-                    </option>
-                </c:forEach>
-            </select>
-
-            <select name="search_status">
-                <option value="">Alle Stati</option>
-
-                <c:forEach items="${statuses}" var="status">
-                    <option value="${status}" ${param.search_status == status ? 'selected' : ''}>
-                        <c:out value="${status.label}"/>
-                    </option>
-                </c:forEach>
-            </select>
-
+            <input type="text" name="search_text" value="${param.search_text}" placeholder="Stichwortsuche"/>
             <button class="icon-search" type="submit">
                 Suchen
             </button>
