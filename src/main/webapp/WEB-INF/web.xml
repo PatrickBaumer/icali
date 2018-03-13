@@ -65,7 +65,7 @@
     -->
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>icali</realm-name>
+        <realm-name>icali-app</realm-name>
         <form-login-config>
             <form-login-page>/WEB-INF/login/login.jsp</form-login-page>
             <form-error-page>/WEB-INF/login/error.jsp</form-error-page>
