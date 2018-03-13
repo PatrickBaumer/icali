@@ -58,6 +58,12 @@
             <div id="m4">
             <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
             </div>
+            <div>
+                        <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
+                    </div>
+                       <div>
+                        <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
+                    </div>
             
         </div>
     </jsp:attribute>
@@ -70,8 +76,7 @@
             <button class="icon-search" type="submit">
                 Suchen
             </button>
-   
-                        
+            
      
                 </div>
     </jsp:attribute>
