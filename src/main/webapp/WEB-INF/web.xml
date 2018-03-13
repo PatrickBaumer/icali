@@ -27,14 +27,14 @@
         -->
         <web-resource-collection>
             <web-resource-name>cali-kalender</web-resource-name>
-            <url-pattern>/cali/*</url-pattern>
+            <url-pattern>/icali/*</url-pattern>
         </web-resource-collection>
         <!--
             Ein Benutzer muss die Rolle "todo-app-user" besitzen, um die
             Seiten aufrufen zu können.
         -->
         <auth-constraint>
-            <role-name>cali-app-user</role-name>
+            <role-name>icali-app-user</role-name>
         </auth-constraint>
         <!--
             Sicherstellen, dass nur verschlüsselte Verbindungen via HTTPS
@@ -57,7 +57,7 @@
             mindestens diese Rolle besitzen, um sich einloggen und neue
             Aufgaben anlegen zu können.
         </description>
-        <role-name>cali-app-user</role-name>
+        <role-name>icali-app-user</role-name>
     </security-role>
     <!--
         Definition der JSP-Dateien mit dem Loginformular und einer Fehlerseite,
