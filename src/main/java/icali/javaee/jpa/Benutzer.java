@@ -42,22 +42,27 @@ import lombok.NoArgsConstructor;
 public class Benutzer implements Serializable{
     
 
-    public Benutzer(String username, String passwordHash, String vunname, String email) {
+    public Benutzer(String username, String password, String vunname, String email) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password.password = password;
+        this.passwordHash = this.hashPassword(password);
         this.vunname = vunname;
         this.email = email;
     }
-    public Benutzer(String username, String passwordHash, String vunname) {
+    public Benutzer(String username, String password, String vunname) {
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.password.password = password;
+        this.passwordHash = this.hashPassword(password);
         this.vunname = vunname;
+        this.email = "";
        
     }
-        public Benutzer(String username, String passwordHash) {
+        public Benutzer(String username, String password) {
         this.username = username;
-        this.passwordHash = passwordHash;
-        //sdasd
+        this.password.password = password;
+        this.passwordHash = this.hashPassword(password);
+        this.vunname = "";
+        this.email = "";
     }
         
     private static final long serialVersionUID = 1L;
@@ -172,14 +177,6 @@ public class Benutzer implements Serializable{
     public void removeFromGroup(String groupname) {
         this.groups.remove(groupname);
     }
-
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
 
     public String getUsername() {
         return username;
