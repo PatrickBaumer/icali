@@ -58,6 +58,7 @@
             <div id="m4">
             <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
             </div>
+            <%-- beide folgende Links müssen noch auf die buttons--%>
             <div>
                         <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
                     </div>

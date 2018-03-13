@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Patrick Baumer
+ * @author Patrick Baumer  
  */
 @WebServlet(urlPatterns = {"/app/erstelleTermin/"})
 public class ErstelleTerminServlet extends HttpServlet {
