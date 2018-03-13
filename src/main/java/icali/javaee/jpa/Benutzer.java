@@ -23,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -36,6 +37,7 @@ import lombok.NoArgsConstructor;
  * @author Patrick Baumer
  */
 @Entity
+@Table(name = "ICALI_BENUTZER")
 @NoArgsConstructor
 public class Benutzer implements Serializable{
     
@@ -88,13 +90,12 @@ public class Benutzer implements Serializable{
     @Column(name = "PASSWORD_HASH", length = 64)
     @NotNull(message = "Das Passwort darf nicht leer sein.")
     private String passwordHash;
-   
-//    Prüfen ob notwendig    
-//    @ElementCollection
-//    @CollectionTable(
-//            name = "ICALI_USER_GROUP",
-//            joinColumns = @JoinColumn(name = "USERNAME")
-//    )
+     
+    @ElementCollection
+    @CollectionTable(
+            name = "ICALI_BENUTZER_GROUP",
+            joinColumns = @JoinColumn(name = "USERNAME")
+    )
     @Column(name = "GROUPNAME")
     List<String> groups = new ArrayList<>();
     

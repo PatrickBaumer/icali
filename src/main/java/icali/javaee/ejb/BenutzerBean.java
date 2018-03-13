@@ -35,7 +35,7 @@ public class BenutzerBean extends EntityBean<Benutzer, Long> {
         if (em.find(Benutzer.class, username) != null) {
             throw new UserAlreadyExistsException("Der Benutzername $B ist bereits vergeben.".replace("$B", username));
         }
-
+        
         Benutzer benutzer = new Benutzer(username, password, vunname, email);
         benutzer.addToGroup("icali-app-user");
         em.persist(benutzer);
