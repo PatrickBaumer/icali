@@ -77,13 +77,25 @@ header, main {
     display: inline-block;
     padding-right: 2em;
     padding-bottom: 0.5em;
+    float:left;
+}
+#menuitem1 {
+    display: inline-block;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    float:right;
+    color: rgb(200, 100, 229);
+    font-size: 50%;
+    margin-bottom: 1rem;
+    
+}
+#hauptfenster{
+    float: right;
+    display: inline-block;
 }
 
 /* Farben für Links */
-a, a:visited {
-    color: rgb(193, 33, 33);
-    text-decoration: none;
-}
+
 
 a:hover {
     text-decoration: underline;

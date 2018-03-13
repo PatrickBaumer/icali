@@ -14,25 +14,54 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <template:base>
-    <jsp:attribute name="title">
+            <jsp:attribute name="title">
         Übersicht
     </jsp:attribute>
+    
 
     <jsp:attribute name="head">
         <link rel="stylesheet" href="<c:url value="/css/task_list.css"/>" />
     </jsp:attribute>
 
+
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/task/new/"/>">Aufgabe anlegen</a>
-        </div>
-
-        <div class="menuitem">
-            <a href="<c:url value="/app/categories/"/>">Kategorien bearbeiten</a>
+            <div id="m1">
+            <button class="icon-switch" type="submit">Wochenansicht/Monatsansicht   </button>
+            </div>
+            <%--<c:if test=abfrage> --%>
+            <div id="m2">
+                <table id="kalender">
+                    <tr>
+                        <td>Kastenssymbol</td>
+                        <td>Meine Kalender</td>
+                        <td>ID</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Häkchen</td>
+                        <td>Kalender1</td>
+                        <td>123</td>    
+                    </tr>
+                    <tr></tr>
+                </table>
+            </div>
+            <%--</c:if>--%>
+               <div id="m2">
+            <button class="icon-erstelleTermin" type="submit">neuen Termin erstellen   </button>
+            </div>
+                  <div id="m3">
+            <button class="icon-erstellenKalender" type="submit">neuen Kalender erstellen  </button>
+            </div>
+                  <div id="m4">
+            <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
+            </div>
+            
         </div>
     </jsp:attribute>
 
     <jsp:attribute name="content">
+        <div id="hauptfenster">
         <%-- Suchfilter --%>
         <form method="GET" class="horizontal" id="search">
             <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
@@ -107,5 +136,6 @@
                 </table>
             </c:otherwise>
         </c:choose>
+                </div>
     </jsp:attribute>
 </template:base>

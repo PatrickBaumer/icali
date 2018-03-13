@@ -36,25 +36,20 @@
             <%-- Titelzeile --%>
             <div id="titlebar">
                 <div class="appname">
-                    Aufgabenliste
+                    iCali
                 </div>
-                <div class="content">
-                    ${title}
-                </div>
-            </div>
-
-            <%-- Menü --%>
-            <div id="menubar">
-                <jsp:invoke fragment="menu"/>
-
-                <c:if test="${not empty pageContext.request.userPrincipal}">
-                    <div class="menuitem">
+                     <c:if test="${not empty pageContext.request.userPrincipal}">
+                 <div id="menuitem1">
                         <a href="<c:url value="/logout/"/>" class="icon-logout">Logout ${pageContext.request.userPrincipal}</a>
                     </div>
-                </c:if>
+                    </c:if>
+                 </div>
+            <%-- Menü --%>
+       </header>
+      
+            <div id="menubar">
+                <jsp:invoke fragment="menu"/>
             </div>
-        </header>
-
         <%-- Hauptinhalt der Seite --%>
         <main>    
             <jsp:invoke fragment="content"/>
