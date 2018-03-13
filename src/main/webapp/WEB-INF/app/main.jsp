@@ -70,53 +70,9 @@
             <button class="icon-search" type="submit">
                 Suchen
             </button>
-        </form>
-
-        <%-- Gefundene Aufgaben --%>
-        <c:choose>
-            <c:when test="${empty tasks}">
-                <p>
-                    Es wurden keine Aufgaben gefunden. 🐈
-                </p>
-            </c:when>
-            <c:otherwise>
-                <jsp:useBean id="utils" class="icali.javaee.web.WebUtils"/>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bezeichnung</th>
-                            <th>Kategorie</th>
-                            <th>Eigentümer</th>
-                            <th>Status</th>
-                            <th>Fällig am</th>
-                        </tr>
-                    </thead>
-                    <c:forEach items="${tasks}" var="task">
-                        <tr>
-                            <td>
-                                <a href="<c:url value="/app/task/${task.id}/"/>">
-                                    <c:out value="${task.shortText}"/>
-                                </a>
-                            </td>
-                            <td>
-                                <c:out value="${task.category.name}"/>
-                            </td>
-                            <td>
-                                <c:out value="${task.owner.username}"/>
-                            </td>
-                            <td>
-                                <c:out value="${task.status.label}"/>
-                            </td>
-                            <td>
-                                <c:out value="${utils.formatDate(task.dueDate)}"/>
-                                <c:out value="${utils.formatTime(task.dueTime)}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:otherwise>
-        </c:choose>
+   
+                        
+     
                 </div>
     </jsp:attribute>
 </template:base>

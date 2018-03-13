@@ -14,112 +14,116 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <template:base>
-    <jsp:attribute name="title">
-        <c:choose>
-            <c:when test="${edit}">
-                Aufgabe bearbeiten
-            </c:when>
-            <c:otherwise>
-                Aufgabe anlegen
-            </c:otherwise>
-        </c:choose>
+                <jsp:attribute name="title">
+        Übersicht
     </jsp:attribute>
+    
 
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="<c:url value="/css/task_edit.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/css/task_list.css"/>" />
     </jsp:attribute>
+
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/"/>">Übersicht</a>
+            <div id="m1">
+            <button class="icon-switch" type="submit">Wochenansicht/Monatsansicht   </button>
+            </div>
+            <%--<c:if test=abfrage> --%>
+            <div id="m2">
+                <form>
+                <table id="kalender">
+                    <tr>
+                        <td><input type="checkbox" name="leer"></td>
+                        <td>Meine Kalender</td>
+                        <td>ID</td>
+                    </tr>
+                    
+                    <tr>
+                        <td><input type="checkbox" name="leer"></td>
+                        <td>$_{KNamAausDB}</td>
+                        <td>$_{idAusDB}</td>    
+                    </tr>
+                    <tr></tr>
+                </table>
+                </form>
+            </div>
+            <%--</c:if>--%>
+            <div id="m2">
+            <button class="icon-erstelleTermin" type="submit">neuen Termin erstellen   </button>
+            </div>
+            <div id="m3">
+            <button class="icon-erstellenKalender" type="submit">neuen Kalender erstellen  </button>
+            </div>
+            <div id="m4">
+            <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
+            </div>
+            
         </div>
     </jsp:attribute>
+<div id="hauptfenster">
+        <jsp:attribute name="content"> Termin erstellen
+                        
+    
 
-    <jsp:attribute name="content">
-        <form method="post" class="stacked">
-            <div class="column">
-                <%-- CSRF-Token --%>
-                <input type="hidden" name="csrf_token" value="${csrf_token}">
-
-                <%-- Eingabefelder --%>
-                <label for="task_owner">Eigentümer:</label>
-                <div class="side-by-side">
-                    <input type="text" name="task_owner" value="${task_form.values["task_owner"][0]}" readonly="readonly">
-                </div>
-
-                <label for="task_category">Kategorie:</label>
-                <div class="side-by-side">
-                    <select name="task_category">
-                        <option value="">Keine Kategorie</option>
-
-                        <c:forEach items="${categories}" var="category">
-                            <option value="${category.id}" ${task_form.values["task_category"][0] == category.id ? 'selected' : ''}>
-                                <c:out value="${category.name}" />
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <label for="task_due_date">
-                    Fällig am:
-                    <span class="required">*</span>
-                </label>
-                <div class="side-by-side">
-                    <input type="text" name="task_due_date" value="${task_form.values["task_due_date"][0]}">
-                    <input type="text" name="task_due_time" value="${task_form.values["task_due_time"][0]}">
-                </div>
-
-                <label for="task_status">
-                    Status:
-                    <span class="required">*</span>
-                </label>
-                <div class="side-by-side margin">
-                    <select name="task_status">
-                        <c:forEach items="${statuses}" var="status">
-                            <option value="${status}" ${task_form.values["task_status"][0] == status ? 'selected' : ''}>
-                                <c:out value="${status.label}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <label for="task_short_text">
-                    Bezeichnung:
-                    <span class="required">*</span>
-                </label>
-                <div class="side-by-side">
-                    <input type="text" name="task_short_text" value="${task_form.values["task_short_text"][0]}">
-                </div>
-
-                <label for="task_long_text">
-                    Beschreibung:
-                </label>
-                <div class="side-by-side">
-                    <textarea name="task_long_text"><c:out value="${task_form.values['task_long_text'][0]}"/></textarea>
-                </div>
-
-                <%-- Button zum Abschicken --%>
-                <div class="side-by-side">
-                    <button class="icon-pencil" type="submit" name="action" value="save">
-                        Sichern
-                    </button>
-
-                    <c:if test="${edit}">
-                        <button class="icon-trash" type="submit" name="action" value="delete">
-                            Löschen
-                        </button>
-                    </c:if>
-                </div>
-            </div>
-
-            <%-- Fehlermeldungen --%>
-            <c:if test="${!empty task_form.errors}">
-                <ul class="errors">
-                    <c:forEach items="${task_form.errors}" var="error">
-                        <li>${error}</li>
+        
+        <%-- Suchfilter --%>
+        <form method="GET" class="horizontal" id="search">
+            <input type="text" name="terminTitel" value="" placeholder="Terminname"/>
+            <c:choose>
+            <c:when test="${empty tasks}">
+                <p>
+                    Es wurden keine Anzeigen gefunden. 🐈
+                </p>
+            </c:when>
+            <c:otherwise>
+                <jsp:useBean id="utils" class="icali.javaee.web.WebUtils"/>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bezeichnung</th>
+                            <th>Kategorie</th>
+                            <th>Eigentümer</th>
+                            <th>Erstellt am</th>
+                            <th>Preis in €</th>
+                        </tr>
+                    </thead>
+                    <c:forEach items="${kalender}" var="kalender">
+                        <tr>
+                            <td>
+                                <a href="<c:url value="/app/kalender/${kalender.name}/"/>">
+                                    <c:out value="${task.shortText}"/>
+                                </a>
+                            </td>
+                            <td>
+                                <c:out value="${task.category.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${task.owner.username}"/>
+                            </td>
+                            <td>
+                                <c:out value="${utils.formatDate(task.dueDate)}"/>
+                                <c:out value="${utils.formatTime(task.dueTime)}"/>
+                            </td>
+                            <td>
+                                <c:out value="${task.price}"/>
+                            </td>
+                        </tr>
                     </c:forEach>
-                </ul>
-            </c:if>
-        </form>
+                </table>
+            </c:otherwise>
+        </c:choose>
+            <input type="text" name="search_text" value="${param.search_text}" placeholder="Stichwortsuche"/>
+            <input type="date" name="anfangsDatum" value="" placeholder="AnfangsDatum"/>
+            <input type="date" name="endDatum" value="" placeholder="EndDatum"/>
+            <input type="time" name="anfangszeit" value="" placeholder="anfangszeit"/>
+            <input type="time" name="Endzeit" value="" placeholder="Endzeit"/>
+            <button class="icon-search" type="submit">
+                Suchen
+            </button>
+            
+            
+            
     </jsp:attribute>
 </template:base>
