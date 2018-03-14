@@ -74,7 +74,7 @@
         <div id="hauptfenster">
             <%-- Suchfilter --%>
             <form method="GET" class="horizontal" id="search">
-                <input type="text" name="search_text" value="${param.search_text}" placeholder="Stichwortsuche"/>
+                <input tyhpe="text" name="search_text" value="${param.search_text}" placeholder="Stichwortsuche"/>
                 <button class="icon-search" type="submit">
                     Suchen
                 </button>
