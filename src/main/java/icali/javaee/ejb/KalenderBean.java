@@ -7,9 +7,17 @@ package icali.javaee.ejb;
 
 import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.WeekFields;
+import java.util.Iterator;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -21,6 +29,9 @@ import javax.persistence.criteria.Root;
 @Stateless
 @RolesAllowed("icali-app-user")
 public class KalenderBean extends EntityBean<Kalender, Long>{
+    
+    private LocalDate date = LocalDate.now();
+    private LocalTime time = LocalTime.now();
     
     public KalenderBean() {
         super(Kalender.class);
@@ -43,5 +54,226 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
                .setParameter("kalenderTitel", kalenderTitel)
                .getResultList();
    }   
+   
+   public LocalDate getCurrentLocalDate() {
+       return LocalDate.now();
+   }
+   
+   public void setCurrentLocalDate(){
+       date = LocalDate.now();
+   }
+   
+   public LocalTime getCurrentLocalTime(){
+        return LocalTime.now();
+    }
     
+    public LocalDate getLocalDate(){
+        return date;
+    }
+    
+    public LocalTime getLocalTime(){
+        return time;
+    }
+    
+    public int getWeekOfMonth(){
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return date.get(weekFields.weekOfMonth());
+    }
+    
+    public int getWeekOfYear(){
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return date.get(weekFields.weekOfYear());
+    }
+    
+    public int nextWeek(){
+        LocalDate hilf = date.plusWeeks(1);
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return hilf.get(weekFields.weekOfYear());
+    }
+    
+    public int nextMonth(){
+        LocalDate hilf = date.plusMonths(1);
+        return hilf.getMonthValue();
+    }
+    
+    public void nextMonthVoid(){
+        date=date.plusMonths(1);
+    }
+    
+    public String getMonthName() {
+        String monthName = "";
+        switch (date.getMonthValue()) {
+            case 1:
+                monthName = "Januar";
+                break;
+            case 2:
+                monthName = "Februar";
+                break;
+            case 3:
+                monthName = "März";
+                break;
+            case 4:
+                monthName = "April";
+                break;
+            case 5:
+                monthName = "Mai";
+                break;
+            case 6:
+                monthName = "Juni";
+                break;
+            case 7:
+                monthName = "Juli";
+                break;
+            case 8:
+                monthName = "August";
+                break;
+            case 9:
+                monthName = "September";
+                break;
+            case 10:
+                monthName = "Oktober";
+                break;
+            case 11:
+                monthName = "November";
+                break;
+            case 12:
+                monthName = "Dezember";
+                break;
+            default:;
+                break;               
+        }
+        return monthName;
+    }
+    
+    public int getYear() {
+        return date.getYear();
+    }
+    
+    public int nextYear(){
+        LocalDate hilf = date.plusYears(1);
+        return hilf.getYear();
+    }
+    
+    public int lastWeek(){
+        LocalDate hilf = date.minusWeeks(1);
+        WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+        return hilf.get(weekFields.weekOfYear());
+    }
+    
+    public int lastMonth(){
+        LocalDate hilf = date.minusMonths(1);
+        return hilf.getMonthValue();
+    }
+    
+    public void lastMonthVoid(){
+        date = date.minusMonths(1);
+    }
+    
+    public int lastYear(){
+        LocalDate hilf = date.minusYears(1);
+        return hilf.getYear();
+    }
+    
+    // Ausgaben für Kalendardarstellung
+    /**
+     * 
+     * @param localDate
+     * @return weekMap -> eine Map mit den Tag des Monats al Key und dem Wochentag als Value
+     * mapping Tag & Wochentag
+     */
+    public Map<Integer, String> weekRepresentation(LocalDate localDate){
+        Map<Integer, String> weekMap = new TreeMap<>();
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        LocalDate monday;
+        switch (dayOfWeek) {  
+            case TUESDAY:monday = localDate.minusDays(1);
+              break;
+            case WEDNESDAY:monday = localDate.minusDays(2);
+              break;
+            case THURSDAY:monday = localDate.minusDays(3);
+              break;
+            case FRIDAY:monday = localDate.minusDays(4);
+              break;
+            case SATURDAY:monday = localDate.minusDays(5);
+              break;
+            case SUNDAY:monday = localDate.minusDays(6);
+              break;
+            default:monday=localDate;
+              break;
+        }
+        for(int i=0; i<7;i++){
+            LocalDate d = monday.plusDays(i);
+            weekMap.put(d.getDayOfMonth(), d.getDayOfWeek().name());
+        }
+        return weekMap; 
+    }
+    /**
+     * 
+     * @param localDate
+     * @return monthMap -> eine Map mit dem Tag des Monats als Key und dem Wochentag als Value
+     * mapping Tag & Wochentag
+     */
+    public Map<Integer, String> monthRepresentation(LocalDate localDate){
+        Map<Integer, String> monthMap = new TreeMap<>();
+        int month =localDate.getMonthValue();
+        for(int i =1; i<=localDate.lengthOfMonth(); i++){
+            LocalDate dayOfMonth = LocalDate.of(localDate.getYear(), month, i);
+            monthMap.put(i, dayOfMonth.getDayOfWeek().name());
+        }
+        return monthMap; 
+    }
+    
+    public LocalDate[][] weeksInMonth(LocalDate localDate){
+        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
+        
+        LocalDate[][] shownWeeks = new LocalDate[6][7];
+        
+        int hilf = 0;
+        int hilf2 = 0;
+        
+        Iterator<LocalDate> hilf3 = shownMonthsMap.keySet().iterator();
+        for(;hilf3.hasNext();) {
+            if (hilf2==7) {
+                hilf++;
+                hilf2 = 0;
+            }
+            shownWeeks[hilf][hilf2] = hilf3.next();
+            hilf2++;
+        }
+        return shownWeeks;
+    }
+    
+    public Map<LocalDate, String> shownMonthRepresentation(LocalDate localDate) {
+        Map<LocalDate, String> shownMonthsMap = new TreeMap<>();
+        DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+        LocalDate monday;
+        
+        switch (dayOfWeek) {  
+            case TUESDAY:monday = localDate.minusDays(1);
+              break;
+            case WEDNESDAY:monday = localDate.minusDays(2);
+              break;
+            case THURSDAY:monday = localDate.minusDays(3);
+              break;
+            case FRIDAY:monday = localDate.minusDays(4);
+              break;
+            case SATURDAY:monday = localDate.minusDays(5);
+              break;
+            case SUNDAY:monday = localDate.minusDays(6);
+              break;
+            default:monday=localDate;
+              break;
+        }
+        
+        boolean x = false;
+        
+        for(int i=0; x==false; i++) {
+            LocalDate d = monday.plusDays(i);
+            shownMonthsMap.put(d, d.getDayOfWeek().name());
+            if (i>38 && d.getDayOfWeek().name().equals("SUNDAY")) {
+                x = true;
+            }
+        }
+        return shownMonthsMap;
+    }  
 }

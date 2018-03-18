@@ -78,64 +78,60 @@
                 <button class="icon-search" type="submit">
                     Suchen
                 </button>
-                <h1>CSS Calendar</h1>
+                <h1>Monatsansicht</h1>
 
-                <div class="month">
-                    <ul>
-                        <li class="prev">&#10094;</li>
-                        <li class="next">&#10095;</li>
-                        <li>
-                            August<br>
-                            <span style="font-size:18px">2017</span>
-                        </li>
-                    </ul>
+                <div class="month_year">
+                    ${shown_month} ${shown_year}
                 </div>
-
-                <ul class="weekdays">
-                    <li>Mo</li>
-                    <li>Tu</li>
-                    <li>We</li>
-                    <li>Th</li>
-                    <li>Fr</li>
-                    <li>Sa</li>
-                    <li>Su</li>
-                </ul>
-
-                <ul class="days">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li><span class="active">10</span></li>
-                    <li>11</li>
-                    <li>12</li>
-                    <li>13</li>
-                    <li>14</li>
-                    <li>15</li>
-                    <li>16</li>
-                    <li>17</li>
-                    <li>18</li>
-                    <li>19</li>
-                    <li>20</li>
-                    <li>21</li>
-                    <li>22</li>
-                    <li>23</li>
-                    <li>24</li>
-                    <li>25</li>
-                    <li>26</li>
-                    <li>27</li>
-                    <li>28</li>
-                    <li>29</li>
-                    <li>30</li>
-                    <li>31</li>
-                </ul>
-
-
+                
+                <div id="backAndForth">
+                    <button type="submit" name="button" value="back">◄</button>
+                    <button type="submit" name="button" value="forth">►</button>
+                    <button type="submit" name="button" value="today">Heute</button>  
+                </div>
+                <div class="month_calendar">
+                    <table>
+                        <tr>
+                            <th>Mo</th>
+                            <th>Di</th>
+                            <th>Mi</th>
+                            <th>Do</th>
+                            <th>Fr</th>
+                            <th>Sa</th>
+                            <th>So</th>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week1" items="${week1}">
+                                <td>${week1}</td>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week2" items="${week2}">
+                                <td>${week2}</td>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week3" items="${week3}">
+                                <td>${week3}</td>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week4" items="${week4}">
+                                <td>${week4}</td>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week5" items="${week5}">
+                                <td>${week5}</td>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach var="week6" items="${week6}">
+                                <td>${week6}</td>
+                            </c:forEach>
+                        </tr>                        
+                    </table>
+                </div>
         </div>
     </jsp:attribute>
 </template:base>
