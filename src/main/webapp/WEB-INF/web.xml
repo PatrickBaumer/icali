@@ -41,9 +41,11 @@
             zugelassen werden. Unverschlüsselte HTTP-Anfragen werden auf
             HTTPS umgeleitet.
         -->
+        <!--
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+        -->
     </security-constraint>
     <!--
         Übersicht über alle von dieser Webanwendung genutzten Benutzerollen

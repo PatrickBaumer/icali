@@ -27,7 +27,7 @@
     <jsp:attribute name="menu">
         <div class="menuitem">
          <div>
-        <a href="<c:url value="/app/kalender/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
+        <a href="<c:url value="/app/kalender/"/>" class="icon-zuruck">zurück </a>
                     </div>
         </div>
     </jsp:attribute>

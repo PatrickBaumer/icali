@@ -74,21 +74,24 @@
         <div id="hauptfenster">
             <%-- Suchfilter --%>
             <form method="GET" class="horizontal" id="search">
+                <!--
                 <input type="text" name="search_text" value="${param.search_text}" placeholder="Stichwortsuche"/>
                 <button class="icon-search" type="submit">
                     Suchen
                 </button>
+                -->
                 <h1>Monatsansicht</h1>
 
                 <div class="month_year">
                     ${shown_month} ${shown_year}
                 </div>
-                
+              
                 <div id="backAndForth">
                     <button type="submit" name="button" value="back">◄</button>
                     <button type="submit" name="button" value="forth">►</button>
                     <button type="submit" name="button" value="today">Heute</button>  
                 </div>
+                </form>  
                 <div class="month_calendar">
                     <table>
                         <tr>
