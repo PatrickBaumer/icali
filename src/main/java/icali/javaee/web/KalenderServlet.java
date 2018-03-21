@@ -31,58 +31,62 @@ public class KalenderServlet extends HttpServlet {
         
         String button = request.getParameter("button");
         if (null != button) switch (button) {
-            case "back":
+            case "month_back":
                 this.kalenderBean.lastMonthVoid();
                 break;
-            case "forth":
+            case "month_forth":
                 this.kalenderBean.nextMonthVoid();
                 break;
             case "today":
                 this.kalenderBean.setCurrentLocalDate();
                 break;
+            case "year_back":
+                this.kalenderBean.lastYearVoid();
+                break;
+            case "year_forth":
+                this.kalenderBean.nextYearVoid();
+                break;
             default:
                 break;
         }
         
-        LocalDate[][] x = kalenderBean.weeksInMonth(this.kalenderBean.getLocalDate());
+        /**
+         * 
+         * LocalDate[Welche Woche: 0-5][Welcher Tag in der Woche: 0-6 für Montag bis Sonntag]
+         * 
+         * 
+         */
+        LocalDate[][] monatsKalender = kalenderBean.weeksInMonth(this.kalenderBean.getLocalDate());
         
-        int[] week1 = new int[7];
-        int[] week2 = new int[7];
-        int[] week3 = new int[7];
-        int[] week4 = new int[7];
-        int[] week5 = new int[7];
-        int[] week6 = new int[7];
+        LocalDate[] week1 = new LocalDate[7];
+        LocalDate[] week2 = new LocalDate[7];
+        LocalDate[] week3 = new LocalDate[7];
+        LocalDate[] week4 = new LocalDate[7];
+        LocalDate[] week5 = new LocalDate[7];
+        LocalDate[] week6 = new LocalDate[7];
         
-        for (int i=0; i<x.length; i++) {
-            if (i==0) {
-                for (int j=0; j<7; j++) {
-                    week1[j] = x[i][j].getDayOfMonth();
-                }
-            }
-            if (i==1) {
-                for (int j=0; j<7; j++) {
-                    week2[j] = x[i][j].getDayOfMonth();
-                }
-            }
-            if (i==2) {
-                for (int j=0; j<7; j++) {
-                    week3[j] = x[i][j].getDayOfMonth();
-                }
-            }
-            if (i==3) {
-                for (int j=0; j<7; j++) {
-                    week4[j] = x[i][j].getDayOfMonth();
-                }
-            }
-            if (i==4) {
-                for (int j=0; j<7; j++) {
-                    week5[j] = x[i][j].getDayOfMonth();
-                }
-            }
-            if (i==5) {
-                for (int j=0; j<7; j++) {
-                    week6[j] = x[i][j].getDayOfMonth();
-                }
+        for (int i= 0; i < monatsKalender.length; i++) {
+            switch (i) {
+            case 0:
+                System.arraycopy(monatsKalender[i], 0, week1, 0, 7);
+                break;
+            case 1: 
+                System.arraycopy(monatsKalender[i], 0, week2, 0, 7);
+                break;            
+            case 2: 
+                System.arraycopy(monatsKalender[i], 0, week3, 0, 7);
+                break;
+            case 3: 
+                System.arraycopy(monatsKalender[i], 0, week4, 0, 7);
+                break;
+            case 4: 
+                System.arraycopy(monatsKalender[i], 0, week5, 0, 7);
+                break;
+            case 5: 
+                System.arraycopy(monatsKalender[i], 0, week6, 0, 7);
+                break;
+            default:
+                break;
             }
         }
         request.setAttribute("shown_month", this.kalenderBean.getMonthName());

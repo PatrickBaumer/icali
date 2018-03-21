@@ -154,6 +154,10 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
         return hilf.getYear();
     }
     
+    public void nextYearVoid() {
+        date = date.plusYears(1);
+    }
+    
     public int lastWeek(){
         LocalDate hilf = date.minusWeeks(1);
         WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
@@ -172,6 +176,10 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
     public int lastYear(){
         LocalDate hilf = date.minusYears(1);
         return hilf.getYear();
+    }
+    
+    public void lastYearVoid() {
+        date = date.minusYears(1);
     }
     
     // Ausgaben für Kalendardarstellung
@@ -228,17 +236,17 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
         
         LocalDate[][] shownWeeks = new LocalDate[6][7];
         
-        int hilf = 0;
-        int hilf2 = 0;
+        int weekCounter = 0;
+        int dayInWeekCounter = 0;
         
-        Iterator<LocalDate> hilf3 = shownMonthsMap.keySet().iterator();
-        for(;hilf3.hasNext();) {
-            if (hilf2==7) {
-                hilf++;
-                hilf2 = 0;
+        
+        for(LocalDate iterationDate : shownMonthsMap.keySet()) {
+            if (dayInWeekCounter==7) {
+                weekCounter++;
+                dayInWeekCounter = 0;
             }
-            shownWeeks[hilf][hilf2] = hilf3.next();
-            hilf2++;
+            shownWeeks[weekCounter][dayInWeekCounter] = iterationDate;
+            dayInWeekCounter++;
         }
         return shownWeeks;
     }
@@ -265,13 +273,13 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
               break;
         }
         
-        boolean x = false;
+        boolean loopBreaker= false;
         
-        for(int i=0; x==false; i++) {
+        for(int i=0; loopBreaker==false; i++) {
             LocalDate d = monday.plusDays(i);
             shownMonthsMap.put(d, d.getDayOfWeek().name());
             if (i>38 && d.getDayOfWeek().name().equals("SUNDAY")) {
-                x = true;
+                loopBreaker = true;
             }
         }
         return shownMonthsMap;
