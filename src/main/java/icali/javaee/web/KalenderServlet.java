@@ -29,8 +29,8 @@ public class KalenderServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String button = request.getParameter("button");
-        if (null != button) switch (button) {
+        String calendar_button = request.getParameter("calendar_button");
+        if (null != calendar_button) switch (calendar_button) {
             case "month_back":
                 this.kalenderBean.lastMonthVoid();
                 break;

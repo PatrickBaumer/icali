@@ -44,14 +44,15 @@
                     </div>
                 </c:if>
             </div>
+            <jsp:invoke fragment="menu"/>
             <%-- Menü --%>
         </header>
         <c:if test="${not empty pageContext.request.userPrincipal}">
             <div class="sidenav">
-                    <button type="submit" name="button" value="view_month_week">Wochenansicht / Monatsansicht</button>
-                    <button type="submit" name="button" value="create_termin">neuen Termin erstellen</button>
-                    <button type="submit" name="button" value="create_calendar">neuen Kalender erstellen  </button>
-                    <button type="submit" name="button" value="search_calendar">Kalendergruppen suchen</button>
+                    <button type="submit" name="sidebar_button" value="view_month_week">Wochenansicht / Monatsansicht</button>
+                    <button type="submit" name="sidebar_button" value="create_termin">neuen Termin erstellen</button>
+                    <button type="submit" name="sidebar_button" value="create_calendar">neuen Kalender erstellen  </button>
+                    <button type="submit" name="sidebar_button" value="search_calendar">Kalendergruppen suchen</button>
                 <%-- beide folgende Links müssen noch auf die buttons--%>
                 <div>
                     <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>

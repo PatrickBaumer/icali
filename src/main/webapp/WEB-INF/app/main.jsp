@@ -46,15 +46,15 @@
                 </div>
 
                 <div id="backAndForth">
-                    <button type="submit" name="button" value="year_back">◄◄</button>
-                    <button type="submit" name="button" value="month_back">◄</button>
-                    <button type="submit" name="button" value="month_forth">►</button>
-                    <button type="submit" name="button" value="year_forth">►►</button>
-                    <button type="submit" name="button" value="today">Heute</button>  
+                    <button type="submit" name="calendar_button" value="year_back">◄◄</button>
+                    <button type="submit" name="calendar_button" value="month_back">◄</button>
+                    <button type="submit" name="calendar_button" value="month_forth">►</button>
+                    <button type="submit" name="calendar_button" value="year_forth">►►</button>
+                    <button type="submit" name="calendar_button" value="today">Heute</button>  
                 </div>
             </form>  
             <div class="month_calendar">
-                <table>
+                <table border="1">
                     <tr>
                         <th>Mo</th>
                         <th>Di</th>

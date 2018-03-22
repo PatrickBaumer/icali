@@ -153,3 +153,17 @@ a:hover {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 } 
+
+table, td, th {
+    border: 1px solid black;
+    height: 100%;
+}
+
+td {
+    height: 4rem;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
