@@ -31,14 +31,14 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/app/erstelleTermin/"})
 public class ErstelleTerminServlet extends HttpServlet {
-        
-    @EJB
-        ValidationBean validationBean;
-    @EJB
-        TerminBean terminBean;
-    @EJB
-        BenutzerBean benutzerBean;
     
+    @EJB
+    ValidationBean validationBean;
+    @EJB
+    TerminBean terminBean;
+    @EJB
+    BenutzerBean benutzerBean;
+
         
 
  

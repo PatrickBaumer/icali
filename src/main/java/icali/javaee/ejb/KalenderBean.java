@@ -7,10 +7,12 @@ package icali.javaee.ejb;
 
 import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
+import icali.javaee.jpa.Termin;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.WeekFields;
+import java.util.HashMap;
 import java.util.Iterator;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -37,7 +39,22 @@ public class KalenderBean extends EntityBean<Kalender, Long>{
         super(Kalender.class);
     }
     
-   public List<Kalender> findByUsername(String username) {
+    public Map<LocalDate, Map<Kategorie, List<Termin>>> getTermine(List<Kategorie> kategorieList){
+        Map<LocalDate, Map<Kategorie, List<Termin>>> dateMap = new TreeMap<>();
+        Map<Kategorie, List<Termin>> kategorieMap = new HashMap<>();
+        for(Kategorie kategorie : kategorieList){
+            List<Termin> terminList = em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList.username = :username ORDER BY k.kalenderTitel")
+               .setParameter("kategorie", kategorie)
+               .getResultList();
+            kategorieMap.put(kategorie, terminList);
+        }
+        dateMap.put(date, kategorieMap);
+        return dateMap;
+    }
+    
+    public void getTermineByKalender(){}
+    
+    public List<Kalender> findByUsername(String username) {
        return em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList.username = :username ORDER BY k.kalenderTitel")
                .setParameter("username", username)
                .getResultList();
