@@ -26,48 +26,7 @@
 
 
     <jsp:attribute name="menu">
-        <div class="menuitem">
-            <div id="m1">
-                <button class="icon-switch" type="submit">Wochenansicht/Monatsansicht   </button>
-            </div>
-            <%--<c:if test=abfrage> --%>
-            <div id="m2">
-                <form>
-                    <table id="kalender">
-                        <tr>
-                            <td><input type="checkbox" name="leer"></td>
-                            <td>Meine Kalender</td>
-                            <td>ID</td>
-                        </tr>
 
-                        <tr>
-                            <td><input type="checkbox" name="leer"></td>
-                            <td>$_{KNamAausDB}</td>
-                            <td>$_{idAusDB}</td>    
-                        </tr>
-                        <tr></tr>
-                    </table>
-                </form>
-            </div>
-            <%--</c:if>--%>
-            <div id="m2">
-                <button class="icon-erstelleTermin" type="submit">neuen Termin erstellen   </button>
-            </div>
-            <div id="m3">
-                <button class="icon-erstellenKalender" type="submit">neuen Kalender erstellen  </button>
-            </div>
-            <div id="m4">
-                <button class="icon-hinzufuegenKalender" type="submit">Kalender hinzufügen   </button>
-            </div>
-            <%-- beide folgende Links müssen noch auf die buttons--%>
-            <div>
-                <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
-            </div>
-            <div>
-                <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
-            </div>
-
-        </div>
     </jsp:attribute>
 
     <jsp:attribute name="content">
