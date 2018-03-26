@@ -60,6 +60,9 @@
                 <div>
                     <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
                 </div>
+                <div>
+                  <a href="<c:url value="/app/wochenansicht/"/>" class="icon-wochenAnsicht">Wochenansicht</a>  
+                </div>
             </div>
         </c:if>
         <%-- Hauptinhalt der Seite --%>

@@ -157,6 +157,14 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     public void nextYearVoid() {
         date = date.plusYears(1);
     }
+    
+    public void nextWeekVoid() {
+        date = date.plusWeeks(1);
+    }
+    
+    public void lastWeekVoid() {
+        date = date.minusWeeks(1);
+    }
 
     public int lastWeek() {
         LocalDate hilf = date.minusWeeks(1);
@@ -236,17 +244,28 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     /**
      *
      * @param localDate
-     * @return weekMap -> eine Map mit den Tag des Monats als Key und dem
+     * @return weekMap -> eine Map mit den Tag des Monats (als LocalDate) als Key und dem
      * Wochentag als Value mapping Tag & Wochentag
      */
-    public Map<Integer, String> weekRepresentation(LocalDate localDate) {
-        Map<Integer, String> weekMap = new TreeMap<>();
+    public Map<LocalDate, String> weekRepresentation(LocalDate localDate) {
+        Map<LocalDate, String> weekMap = new TreeMap<>();
 
         for (int i = 0; i < 7; i++) {
-            weekMap.put(getMonday(localDate).plusDays(i).getDayOfMonth(),
+            weekMap.put(getMonday(localDate).plusDays(i),
                     getMonday(localDate).plusDays(i).getDayOfWeek().name());
         }
         return weekMap;
+    }
+    
+    public LocalDate[] shownWeek (LocalDate localDate) {
+        Map<LocalDate, String> weekMap = weekRepresentation(localDate);
+        LocalDate[] shownWeek = new LocalDate[7];
+        int hilf = 0;
+        for (LocalDate iterationDate : weekMap.keySet()) {
+            shownWeek[hilf] = iterationDate;
+            hilf++;
+        }
+        return shownWeek;
     }
 
     public LocalDate getMonday(LocalDate localDate) {
