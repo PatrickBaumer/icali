@@ -194,13 +194,13 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     /**
      * @param kalenderId
      * @param localDate
-     * @return weekMap -> eine Map mit den Tag und eine Liste mit Terminen zu
+     * @return weekMap -> eine Map mit den LocalDate Tag und eine Liste mit Terminen zu
      * diesem Tag als Value mapping Tag & dazugehörigen Termine
      *
      */
 
-    public Map<Integer, List<Termin>> getWeekMapByKalenderId(Long kalenderId, LocalDate localDate) {
-        Map<Integer, List<Termin>> weekMap = new TreeMap<>();
+    public Map<LocalDate, List<Termin>> getWeekMapByKalenderId(Long kalenderId, LocalDate localDate) {
+        Map<LocalDate, List<Termin>> weekMap = new TreeMap<>();
         for (int i = 0; i < 7; i++) {
             List<Termin> terminByDayList = new ArrayList<>();
             
@@ -211,7 +211,7 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
                     terminByDayList.add(termin);
                 }
             }
-            weekMap.put(getMonday(localDate).plusDays(i).getDayOfMonth(), terminByDayList);
+            weekMap.put(getMonday(localDate).plusDays(i), terminByDayList);
         }
         return weekMap;
     }
@@ -219,23 +219,24 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     /**
      * @param kalenderId
      * @param localDate
-     * @return weekMap -> eine Map mit den Tag und eine Liste mit Terminen zu
+     * @return weekMap -> eine Map mit den LocalDate Tag und eine Liste mit Terminen zu
      * diesem Tag als Value mapping Tag & dazugehörigen Termine
      *
      */
-    public Map<Integer, List<Termin>> getMonthMapByKalenderId(Long kalenderId, LocalDate localDate) {
-        Map<Integer, List<Termin>> monthMap = new TreeMap<>();
-        for (int i = 1; i <= localDate.lengthOfMonth(); i++) {
+    public Map<LocalDate, List<Termin>> getMonthMapByKalenderId(Long kalenderId, LocalDate localDate) {
+        Map<LocalDate, List<Termin>> monthMap = new TreeMap<>();
+        for (int i = 1; i <=localDate.lengthOfMonth(); i++) {
             List<Termin> terminByDayList = new ArrayList<>();
-            
+            LocalDate dayOfMonth = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), i);
+                
             for (Termin termin : findByKalenderId(kalenderId).getTerminList()) {
                 LocalDate startDatum = termin.getStartDatum().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
-                if (getMonday(localDate).plusDays(i).isEqual(startDatum)) {
+                if (dayOfMonth.isEqual(startDatum)) {
                     terminByDayList.add(termin);
                 }
             }
-            monthMap.put(i, terminByDayList);
+            monthMap.put(dayOfMonth, terminByDayList);
         }
         return monthMap;
     }
