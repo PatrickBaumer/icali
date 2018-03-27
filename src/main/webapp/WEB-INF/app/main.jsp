@@ -13,6 +13,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
+
 <template:base>
     <jsp:attribute name="title">
         Übersicht
@@ -25,9 +26,7 @@
     </jsp:attribute>
 
 
-    <jsp:attribute name="menu">
 
-    </jsp:attribute>
 
     <jsp:attribute name="content">
         <div id="hauptfenster">

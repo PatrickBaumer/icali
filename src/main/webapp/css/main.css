@@ -47,35 +47,12 @@ main {
 }
 
 
-#menubar .menuitem {
-    display: inline-block;
-    padding-right: 2em;
-    padding-bottom: 0.5em;
-    float:left;
-}
-#menuitem1 {
-    display: inline-block;
-    padding-right: 2em;
-    padding-bottom: 0.5em;
-    float:right;
-    color: rgb(200, 100, 229);
-    font-size: 50%;
-    margin-bottom: 1rem;  
-}
-
-
-#m1{
-    width: 100%;
-    font-size: 100%;
-    margin-top: 0.5em;
-}
-
 a:hover {
     text-decoration: underline;
 }
 
 #hauptfenster {
-    margin-left: 160px; /* Same as the width of the sidebar */
+    margin-left: 20%; /* Same as the width of the sidebar */
     padding: 0px 10px;
 }
 
@@ -107,7 +84,7 @@ table {
   background-color: #2e353d;
   position: fixed;
   top: 0px;
-  width: 300px;
+  width: 20%;
   height: 100%;
   color: #e1ffff;
 }

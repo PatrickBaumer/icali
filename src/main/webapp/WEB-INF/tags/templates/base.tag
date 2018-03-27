@@ -36,10 +36,7 @@
     <body>
         <%-- Kopfbereich --%>
         <header>
-            <%-- Titelzeile --%>
-            <div id="titlebar">
 
-            </div>
             <c:if test="${not empty pageContext.request.userPrincipal}">
                 <div class="nav-side-menu">
                     <div class="brand">iCali</div>
@@ -48,13 +45,13 @@
                     <div class="menu-list">
                         <ul id="menu-content" class="menu-content collapse out">
                             <li>
-                                <a href="#"><i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>                              
+                                <a href="<c:url value="/app/wochenansicht/"/>"><i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>                              
                             </li>
                             <li>
-                                <a href="#"><i class="placeholder_create_date"></i> neuen Termin erstellen </a>
+                                <a href="<c:url value="/app/erstelleTermin/"/>"><i class="placeholder_create_date"></i> Termin erstellen </a>
                             </li>
                             <li>
-                                <svg-icon><src href="sprite.svg#si-glyph-calendar-1" /></svg-icon><a href="#"><i class="placeholder_create_cal"></i> neuen Kalender erstellen </a>
+                                <a href="<c:url value="/app/erstelleKalender/"/>"><i class="placeholder_create_cal"></i> Kalender erstellen </a>
                             </li>  
                             <li data-toggle="collapse" data-target="#new" class="collapsed">
                                 <a href="#"><i class="placeholder_search"></i> Kalendergruppen suchen <span class="arrow"></span></a>
@@ -74,7 +71,6 @@
                         </ul>
                     </div>
                 </c:if>
-                <jsp:invoke fragment="menu"/>
                 <%-- Menü --%>
         </header>
         <!--
@@ -85,10 +81,10 @@
                             <button type="submit" name="sidebar_button" value="search_calendar">Kalendergruppen suchen</button>
         <%-- beide folgende Links müssen noch auf die buttons--%>
         <div>
-            <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
+            <a href="<c:url value="icali/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
         </div>
         <div>
-            <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
+            <a href="<c:url value="icali/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
         </div>
     </div>  -->
 
