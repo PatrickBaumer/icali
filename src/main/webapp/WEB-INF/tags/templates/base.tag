@@ -27,6 +27,9 @@
         <link rel="stylesheet" href="<c:url value="/fontello/css/fontello.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/main.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/form.css"/>" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
         <jsp:invoke fragment="head"/>
     </head>
@@ -35,36 +38,60 @@
         <header>
             <%-- Titelzeile --%>
             <div id="titlebar">
-                <div class="appname">
-                    iCali
-                </div>
-                <c:if test="${not empty pageContext.request.userPrincipal}">
-                    <div id="menuitem1">
-                        <a href="<c:url value="/logout/"/>" class="icon-logout">Logout ${pageContext.request.userPrincipal}</a>
+
+            </div>
+            <c:if test="${not empty pageContext.request.userPrincipal}">
+                <div class="nav-side-menu">
+                    <div class="brand">iCali</div>
+                    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+                    <div class="menu-list">
+                        <ul id="menu-content" class="menu-content collapse out">
+                            <li>
+                                <a href="#"><i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>                              
+                            </li>
+                            <li>
+                                <a href="#"><i class="placeholder_create_date"></i> neuen Termin erstellen </a>
+                            </li>
+                            <li>
+                                <svg-icon><src href="sprite.svg#si-glyph-calendar-1" /></svg-icon><a href="#"><i class="placeholder_create_cal"></i> neuen Kalender erstellen </a>
+                            </li>  
+                            <li data-toggle="collapse" data-target="#new" class="collapsed">
+                                <a href="#"><i class="placeholder_search"></i> Kalendergruppen suchen <span class="arrow"></span></a>
+                            </li>
+                            
+                            <ul class="sub-menu collapse" id="new">
+                                <li>New New 1</li>
+                                <li>New New 2</li>
+                                <li>New New 3</li>
+                            </ul>
+                            <li>
+                                <a href="#"> <i class="placeholder_edit_profile"></i> Profil bearbeiten?!</a>
+                            </li>
+                                <li>
+                                    <a href="<c:url value="/logout/"/>" class="icon-logout"> <i class="placeholder_logout"></i> Logout ${pageContext.request.userPrincipal} </a>
+                                </li>
+                        </ul>
                     </div>
                 </c:if>
-            </div>
-            <jsp:invoke fragment="menu"/>
-            <%-- Menü --%>
+                <jsp:invoke fragment="menu"/>
+                <%-- Menü --%>
         </header>
-        <c:if test="${not empty pageContext.request.userPrincipal}">
-            <div class="sidenav">
-                    <button type="submit" name="sidebar_button" value="view_month_week">Wochenansicht / Monatsansicht</button>
-                    <button type="submit" name="sidebar_button" value="create_termin">neuen Termin erstellen</button>
-                    <button type="submit" name="sidebar_button" value="create_calendar">neuen Kalender erstellen  </button>
-                    <button type="submit" name="sidebar_button" value="search_calendar">Kalendergruppen suchen</button>
-                <%-- beide folgende Links müssen noch auf die buttons--%>
-                <div>
-                    <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
-                </div>
-                <div>
-                    <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
-                </div>
-                <div>
-                  <a href="<c:url value="/app/wochenansicht/"/>" class="icon-wochenAnsicht">Wochenansicht</a>  
-                </div>
-            </div>
-        </c:if>
+        <!--
+                    <div class="sidenav">
+                            <button type="submit" name="sidebar_button" value="view_month_week">Wochenansicht / Monatsansicht</button>
+                            <button type="submit" name="sidebar_button" value="create_termin">neuen Termin erstellen</button>
+                            <button type="submit" name="sidebar_button" value="create_calendar">neuen Kalender erstellen  </button>
+                            <button type="submit" name="sidebar_button" value="search_calendar">Kalendergruppen suchen</button>
+        <%-- beide folgende Links müssen noch auf die buttons--%>
+        <div>
+            <a href="<c:url value="/app/erstelleKalender/"/>" class="icon-erstelleKalender">Erstelle Kalender ${pageContext.request.userPrincipal}</a>
+        </div>
+        <div>
+            <a href="<c:url value="/app/erstelleTermin/"/>" class="icon-erstelleTermin">Erstelle Termin ${pageContext.request.userPrincipal}</a>
+        </div>
+    </div>  -->
+
         <%-- Hauptinhalt der Seite --%>
         <main>    
             <jsp:invoke fragment="content"/>
