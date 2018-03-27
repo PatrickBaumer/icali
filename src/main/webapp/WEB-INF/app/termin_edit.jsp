@@ -36,6 +36,18 @@
         <div id="hauptfenster">
                 Termin erstellen
                 <div id="m1">
+                <label for="termin_kalender">Kalender:</label>
+                <div class="side-by-side">
+                    <select name="termin_kalender">
+                        <option value="">Keine Kalender</option>
+
+                        <c:forEach items="${kalender}" var="termin">
+                            <option value="${kalender.id}" ${task_form.values["termin_kalender"][0] == category.id ? 'selected' : ''}>
+                                <c:out value="${kalender.name}" />
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
                     <form method="POST" class="terminerstellen">
                     <div id="m1"><input type="text" name="terminTitel" value="" placeholder="Terminname"/></div> 
                     <div id="m1"><input type="date" name="anfangsDatum" value="" placeholder="AnfangsDatum"/>
@@ -50,12 +62,20 @@
 
                     </div>
                     </form>
+                <label for="termin_category">Kategorie:</label>
+                <div class="side-by-side">
+                    <select name="termin_category">
+                        <option value="">Keine Kategorie</option>
+
+                        <c:forEach items="${categories}" var="category">
+                            <option value="${category.id}" ${termin_form.values["termin_category"][0] == category.id ? 'selected' : ''}>
+                                <c:out value="${category.name}" />
+                            </option>
+                        </c:forEach>
+                    </select>
                 </div>
-                
-                
+                </div>
                 <div id="m1"><button class="icon-erstelleT" type="submit">Erstellen</button></div>
-                        
-     
         </div>
     </jsp:attribute>
 </template:base>

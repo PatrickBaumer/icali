@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @RolesAllowed("icali-app-user")
-public class KategorieBean extends EntityBean<Kategorie, String> {
+public class KategorieBean extends EntityBean<Kategorie, Long> {
 
     public KategorieBean() {
         super(Kategorie.class);

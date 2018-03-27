@@ -6,8 +6,11 @@
 package icali.javaee.web;
 
 import icali.javaee.ejb.BenutzerBean;
+import icali.javaee.ejb.KalenderBean;
+import icali.javaee.ejb.KategorieBean;
 import icali.javaee.ejb.TerminBean;
 import icali.javaee.ejb.ValidationBean;
+import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Termin;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,11 +41,11 @@ public class ErstelleTerminServlet extends HttpServlet {
     TerminBean terminBean;
     @EJB
     BenutzerBean benutzerBean;
-
-        
-
- 
-
+    @EJB
+    KategorieBean kategorieBean;
+    @EJB
+    KalenderBean kalenderBean;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,19 +87,21 @@ public class ErstelleTerminServlet extends HttpServlet {
         Date endDatum = WebUtils.parseDate(request.getParameter("endDatum"));
         Time endzeit = WebUtils.parseTime(request.getParameter("endzeit"));
         String beschreibung = request.getParameter("beschreibung");
+        String kalenderId = request.getParameter("termin_kalende");
+        String kategorie = request.getParameter("termin_category");
+
+        Termin termin = this.getRequestedTermin(request);
+        termin.setTerminTitel(terminTitel);
+        termin.setTerminBeschreibung(beschreibung);
         
-
-         Termin termin = this.getRequestedTermin(request);
-
-////        if (terminTitel != null && !terminTitel.trim().isEmpty()) {
-////            try {
-////                termin.setTerminTitel(this.terminBean.findById(Long.parseLong(terminTitel)));
-////            } catch (NumberFormatException ex) {
-////                // Ungültige oder keine ID mitgegeben
-////            }
-////        }
-
-
+        if (kategorie != null && !kategorie.trim().isEmpty()) {
+            try {
+                termin.setTerminKartegorie(this.kategorieBean.findById(Long.parseLong(kategorie)));
+            } catch (NumberFormatException ex) {
+                // Ungültige oder keine ID mitgegeben
+            }
+        }
+ 
         if (anfangsDatum != null) {
             termin.setStartDatum(anfangsDatum);
         } else {
@@ -110,25 +115,26 @@ public class ErstelleTerminServlet extends HttpServlet {
         }   
         
         if (endDatum != null) {
-            termin.setStartDatum(endDatum);
+            termin.setEndeDatum(endDatum);        
         } else {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
         if (endzeit != null) {
-            termin.setStartUhrzeit(endzeit);
+            termin.setEndeDatum(endDatum);
         } else { 
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
-
-
-
 
         this.validationBean.validate(termin, errors);
 
         // Datensatz speichern
         if (errors.isEmpty()) {
             this.terminBean.update(termin);
+            Kalender kalender = this.kalenderBean.findById(Long.parseLong(kalenderId));
+            List<Termin> terminList = new ArrayList<>(kalender.getTerminList());
+            terminList.add(termin);
+            kalender.setTerminList(terminList);
         }
 
         // Weiter zur nächsten Seite
@@ -193,15 +199,15 @@ public class ErstelleTerminServlet extends HttpServlet {
 private FormValues erstelleTerminForm(Termin termin) {
         Map<String, String[]> values = new HashMap<>();
 
-        values.put("teermin_owner", new String[]{
+        values.put("termin_owner", new String[]{
             termin.getErsteller().getUsername()
         });
 
-//        if (termin.getCategory() != null) {
-//            values.put("task_category", new String[]{
-//                termin.getCategory().toString()
-//            });
-//        }
+        if (termin.getTerminKartegorie()!= null) {
+            values.put("task_category", new String[]{
+                termin.getTerminKartegorie().toString()
+            });
+        }
 
         values.put("anfangsDatum", new String[]{
             WebUtils.formatDate((Date) termin.getStartDatum())

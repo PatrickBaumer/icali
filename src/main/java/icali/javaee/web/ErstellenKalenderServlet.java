@@ -8,7 +8,9 @@ package icali.javaee.web;
 import icali.javaee.ejb.BenutzerBean;
 import icali.javaee.ejb.KalenderBean;
 import icali.javaee.ejb.ValidationBean;
+import icali.javaee.jpa.Farbe;
 import icali.javaee.jpa.Kalender;
+import icali.javaee.jpa.Kategorie;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,18 +76,35 @@ public class ErstellenKalenderServlet extends HttpServlet {
         List<String> errors = new ArrayList<>();
 
         String kalenderTitel = request.getParameter("kalenderTitel");
-        // Schleife ? weil es können unbegrenzt viele Kategorien angegeben werden
-        String kategorie = request.getParameter("kalenderKategorie");
+        String kalenderBeschreibung = request.getParameter("kalenderBeschreibung");
+        String kategorieGelb = request.getParameter("gelbBeschreibung");
+        String kategorieGruen = request.getParameter("gruenBeschreibung");
+        String kategorieBlau = request.getParameter("blauBeschreibung");
+        String kategorieRot = request.getParameter("rotBeschreibung");
+        String kategorieLila = request.getParameter("lilaBeschreibung");
+        String kategorieBraun = request.getParameter("braunBeschreibung");
 
         Kalender kalender = this.getRequestedKalender(request);
-
-//        if (kalenderTitel != null && !kalenderTitel.trim().isEmpty()) {
-//            try {
-//                kalender.setkalenderTitel(this.kalenderBean.findById(Long.parseLong(kalenderTitel)));
-//            } catch (NumberFormatException ex) {
-//                // Ungültige oder keine ID mitgegeben
-//            }
-//        }
+        kalender.setKalenderTitel(kalenderTitel);
+        kalender.setBeschreibung(kalenderBeschreibung);
+        
+        List<Kategorie> kategorieList = new ArrayList<>();
+        
+        if(kategorieGelb != null)
+            kategorieList.add(new Kategorie(kategorieGelb, Farbe.Gelb));
+        if(kategorieGruen != null)
+            kategorieList.add(new Kategorie(kategorieGruen, Farbe.Grün));
+        if(kategorieBlau != null)
+            kategorieList.add(new Kategorie(kategorieBlau, Farbe.Blau));
+        if(kategorieRot != null)
+            kategorieList.add(new Kategorie(kategorieRot, Farbe.Rot));
+        if(kategorieLila != null)
+            kategorieList.add(new Kategorie(kategorieLila, Farbe.Lila));
+        if(kategorieBraun != null)
+            kategorieList.add(new Kategorie(kategorieBraun, Farbe.Braun));
+        
+        kalender.setKalenderKategorie(kategorieList);
+        
         this.validationBean.validate(kalender, errors);
 
         // Datensatz speichern
@@ -138,7 +157,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
 
         return kalender;
     }
-
+    
     private void loescheKalender(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

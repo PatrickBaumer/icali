@@ -11,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +30,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Kategorie implements Serializable{
 
     @Id
+    @GeneratedValue(generator = "kalender_id")
+    @TableGenerator(name = "kalender_id", initialValue = 0)
     private Long id;
 
     @Column(name = "kat_name")
@@ -49,6 +52,11 @@ public class Kategorie implements Serializable{
     
     @ManyToOne(fetch = FetchType.LAZY)
     Kalender kategorieKalender =null;
+
+    public Kategorie( String kategorieName, Farbe kategorieFarbe) {
+        this.kategorieName = kategorieName;
+        this.kategorieFarbe = kategorieFarbe;
+    }
     
     
 }

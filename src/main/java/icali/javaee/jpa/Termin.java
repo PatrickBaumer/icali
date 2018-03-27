@@ -42,11 +42,11 @@ public class Termin implements Serializable{
     
     @Column(name = "t_titel")
     @NotNull(message = "Bitte geben Sie einen Terminnnamen ein")
-    private Time terminTitel;
+    private String terminTitel;
     
     @Column(name = "t_ort")
     @NotNull(message = "Bitte einen Ort angeben")
-    private Time terminOrt;
+    private String terminOrt;
         
     @Column(name = "t_beschreibung")
     @Lob
