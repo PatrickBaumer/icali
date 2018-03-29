@@ -87,7 +87,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
         Kalender kalender = new Kalender();
         kalender.setKalenderTitel(kalenderTitel);
         kalender.setBeschreibung(kalenderBeschreibung);
-        
+        kalender.setKalenderAdmin(this.benutzerBean.getCurrentBenutzer());
         List<Kategorie> kategorieList = new ArrayList<>();
         
         if(kategorieGelb != null)
@@ -104,7 +104,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
             kategorieList.add(this.kategorieBean.saveNew(new Kategorie(kategorieBraun, Farbe.Braun)));
         
         kalender.setKalenderKategorie(kategorieList);
-        
+
         this.validationBean.validate(kalender);
 
         // Datensatz speichern

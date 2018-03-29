@@ -86,7 +86,7 @@ public class Kalender implements Serializable{
     private final Password password = new Password();
 
     @Column(name = "k_password_hash", length = 64)
-    @NotNull(message = "Das Passwort darf nicht leer sein.")
+//    @NotNull(message = "Das Passwort darf nicht leer sein.")
     private String kalenderPasswordHash;
     
     private String hashPassword(String password) {

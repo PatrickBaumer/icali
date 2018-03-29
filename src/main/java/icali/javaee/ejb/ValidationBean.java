@@ -58,7 +58,7 @@ public class ValidationBean {
 //        violations.forEach((ConstraintViolation<T> violation) -> {
 //            messages.add(violation.getMessage());
 //        });
-//        
+
         return messages;
     }
 }

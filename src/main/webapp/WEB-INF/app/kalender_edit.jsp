@@ -96,9 +96,6 @@
                        </div>
                     </form>
                 </div>
-
-                        
-     
         </div>
     </jsp:attribute>
 </template:base>
