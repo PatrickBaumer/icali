@@ -102,4 +102,11 @@ public class Kalender implements Serializable{
         this.password.password = password;
         this.kalenderPasswordHash = this.hashPassword(password);
     } 
+
+    public Kalender(String kalenderTitel, Benutzer kalenderAdmin, String beschreibung) {
+        this.kalenderTitel = kalenderTitel;
+        this.kalenderAdmin = kalenderAdmin;
+        this.beschreibung = beschreibung;
+    }
+    
 }
