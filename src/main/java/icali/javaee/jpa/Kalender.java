@@ -40,7 +40,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-
 public class Kalender implements Serializable{
  
       
@@ -69,14 +68,6 @@ public class Kalender implements Serializable{
     @OneToMany(mappedBy = "kategorieKalender")
     private List<Kategorie> kalenderKategorie = new ArrayList<>();
     
-    
-    
-    
-    
-    
-    
-    
-    
     //passwort für Kalender
     public class Password {
         @Size(min = 6, max = 64, message = "Das Passwort muss zwischen sechs und 64 Zeichen lang sein.")
@@ -86,7 +77,7 @@ public class Kalender implements Serializable{
     private final Password password = new Password();
 
     @Column(name = "k_password_hash", length = 64)
-//    @NotNull(message = "Das Passwort darf nicht leer sein.")
+    @NotNull(message = "Das Passwort darf nicht leer sein.")
     private String kalenderPasswordHash;
     
     private String hashPassword(String password) {
@@ -107,7 +98,8 @@ public class Kalender implements Serializable{
         return bigInt.toString(16);
     }
     
-
-    
-    
+    public void setPassword(String password) {
+        this.password.password = password;
+        this.kalenderPasswordHash = this.hashPassword(password);
+    } 
 }

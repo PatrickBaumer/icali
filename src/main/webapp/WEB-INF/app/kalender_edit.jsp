@@ -52,6 +52,20 @@
                         <textarea name="kalenderBeschreibung" value="" placeholder="Beschreibung"></textarea>
 
                     </div>
+                    <label for="signup_password1">
+                        Einschreibeschlüssel:
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="password" name="password1" >
+                    </div>
+                    <label for="signup_password2">
+                        Einschreibeschlüssel (wdh.):
+                        <span class="required">*</span>
+                    <div class="side-by-side">
+                        <input type="password" name="password2" >
+                    </div>
+                    </label>
                        <div>
                            <table>
                                <tr>

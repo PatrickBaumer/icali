@@ -23,6 +23,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -74,7 +75,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
 
     private void erstelleKalender(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         String kalenderTitel = request.getParameter("kalenderTitel");
         String kalenderBeschreibung = request.getParameter("kalenderBeschreibung");
         String kategorieGelb = request.getParameter("gelbBeschreibung");
@@ -83,11 +84,22 @@ public class ErstellenKalenderServlet extends HttpServlet {
         String kategorieRot = request.getParameter("rotBeschreibung");
         String kategorieLila = request.getParameter("lilaBeschreibung");
         String kategorieBraun = request.getParameter("braunBeschreibung");
-
+        String password1 = request.getParameter("password1");
+        String password2 = request.getParameter("password2");
+ 
+        List<String> errors = new ArrayList<>();
+        
+        if (password1 != null && password2 != null && !password1.equals(password2)) {
+            errors.add("Die beiden Passwörter stimmen nicht überein.");
+        }
+        
         Kalender kalender = new Kalender();
         kalender.setKalenderTitel(kalenderTitel);
         kalender.setBeschreibung(kalenderBeschreibung);
         kalender.setKalenderAdmin(this.benutzerBean.getCurrentBenutzer());
+       
+        kalender.setPassword(password1);
+        
         List<Kategorie> kategorieList = new ArrayList<>();
         
         if(kategorieGelb != null)
@@ -105,13 +117,15 @@ public class ErstellenKalenderServlet extends HttpServlet {
         
         kalender.setKalenderKategorie(kategorieList);
 
-        this.validationBean.validate(kalender);
-
-        // Datensatz speichern
-            this.kalenderBean.saveNew(kalender);
-
-        response.sendRedirect(WebUtils.appUrl(request, "/app/main"));
+        errors.addAll(validationBean.validate(kalender));
         
+        if(errors.isEmpty()){
+            this.kalenderBean.saveNew(kalender);
+            response.sendRedirect(WebUtils.appUrl(request, "/app/kalender/"));
+        }else{
+            // fehlermeldung popup
+        }
+  
     }
 
 
