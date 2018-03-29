@@ -49,7 +49,7 @@
                        <div id="m1"><input type="text" name="kalenderTitel" value="" placeholder="Kalendername"/></div> 
                     
                     <div id="kalenderBeschreibung">
-                        <textarea name="kalenderBeschreibung" value="" placeholder="Beschreibung">Beschreibung</textarea>
+                        <textarea name="kalenderBeschreibung" value="" placeholder="Beschreibung"></textarea>
 
                     </div>
                        <div>
@@ -91,11 +91,12 @@
                                </tr>
                            </table>
                        </div>
+                       <div>
+                           <button  type="submit" name="action" value="save">Erstellen</button>
+                       </div>
                     </form>
                 </div>
-                <div id="m1">
-                    <button class="icon-erstelleK" type="submit" name="action" value="save">Erstellen</button>
-                </div>
+
                         
      
         </div>

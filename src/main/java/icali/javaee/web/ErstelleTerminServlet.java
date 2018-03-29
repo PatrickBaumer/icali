@@ -49,7 +49,28 @@ public class ErstelleTerminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       request.getRequestDispatcher("/WEB-INF/app/termin_edit.jsp").forward(request, response);
+        
+        // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
+        request.setAttribute("kalender", this.kalenderBean.findByUsername(this.benutzerBean.getCurrentBenutzer().getUsername()));
+        //request.setAttribute("kategories", this.kategorieBean.findCategoriesByKalenderId(kalender));
+        
+
+        // Zu bearbeitende Aufgabe einlesen
+        HttpSession session = request.getSession();
+
+        Termin termin = this.getRequestedTermin(request);
+        request.setAttribute("edit", termin.getTerminId() != 0);
+                                
+        if (session.getAttribute("termin_form") == null) {
+            // Keine Formulardaten mit fehlerhaften Daten in der Session,
+            // daher Formulardaten aus dem Datenbankobjekt übernehmen
+            request.setAttribute("termin_form", this.erstelleTerminForm(termin));
+        }
+
+        // Anfrage an die JSP weiterleiten
+        request.getRequestDispatcher("/WEB-INF/app/termin_edit.jsp").forward(request, response);
+
+        session.removeAttribute("termin_form");
     }
     
     @Override

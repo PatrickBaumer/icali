@@ -55,6 +55,7 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
                 .getResultList();
     }
 
+    
     public LocalDate getCurrentLocalDate() {
         return LocalDate.now();
     }
@@ -288,24 +289,24 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
         return monthMap;
     }
 
-//    public LocalDate[][] weeksInMonth(LocalDate localDate) {
-//        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
-//
-//        LocalDate[][] shownWeeks = new LocalDate[6][7];
-//
-//        int weekCounter = 0;
-//        int dayInWeekCounter = 0;
-//
-//        for (LocalDate iterationDate : shownMonthsMap.keySet()) {
-//            if (dayInWeekCounter == 7) {
-//                weekCounter++;
-//                dayInWeekCounter = 0;
-//            }
-//            shownWeeks[weekCounter][dayInWeekCounter] = iterationDate;
-//            dayInWeekCounter++;
-//        }
-//        return shownWeeks;
-//    }
+    public LocalDate[][] weeksInMonth(LocalDate localDate) {
+        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
+
+        LocalDate[][] shownWeeks = new LocalDate[6][7];
+
+        int weekCounter = 0;
+        int dayInWeekCounter = 0;
+
+        for (LocalDate iterationDate : shownMonthsMap.keySet()) {
+            if (dayInWeekCounter == 7) {
+                weekCounter++;
+                dayInWeekCounter = 0;
+            }
+            shownWeeks[weekCounter][dayInWeekCounter] = iterationDate;
+            dayInWeekCounter++;
+        }
+        return shownWeeks;
+    }
 
     public Map<LocalDate, String> shownMonthRepresentation(LocalDate localDate) {
         Map<LocalDate, String> shownMonthsMap = new TreeMap<>();
@@ -346,36 +347,36 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
         return monthMap;
     }
     
-        public Map<Integer, List<LocalDate>> weeksInMonth(LocalDate localDate) {
-        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
-
-        Map<Integer, List<LocalDate>> shownWeeks = new TreeMap<>();
-
-        int weekCounter = 1;
-        int dayInWeekCounter = 0;
-        List<LocalDate> datesPerWeek = new ArrayList<>();
-
-        for (LocalDate iterationDate : shownMonthsMap.keySet()) {
-            if (dayInWeekCounter == 7) {
-                dayInWeekCounter = 0;
-                shownWeeks.put(weekCounter, datesPerWeek);
-                weekCounter++;
-            }
-            datesPerWeek.add(iterationDate);
-            dayInWeekCounter++;
-        }
-        return shownWeeks;
-    }
+//        public Map<Integer, List<LocalDate>> weeksInMonth(LocalDate localDate) {
+//        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
+//
+//        Map<Integer, List<LocalDate>> shownWeeks = new TreeMap<>();
+//
+//        int weekCounter = 1;
+//        int dayInWeekCounter = 0;
+//        List<LocalDate> datesPerWeek = new ArrayList<>();
+//
+//        for (LocalDate iterationDate : shownMonthsMap.keySet()) {
+//            if (dayInWeekCounter == 7) {
+//                dayInWeekCounter = 0;
+//                shownWeeks.put(weekCounter, datesPerWeek);
+//                weekCounter++;
+//            }
+//            datesPerWeek.add(iterationDate);
+//            dayInWeekCounter++;
+//        }
+//        return shownWeeks;
+//    }
         
-        public Map<Integer, Map<LocalDate, List<Termin>>> monthWithDates (Long kalenderId,LocalDate localDate) {
-            Map<Integer, List<LocalDate>> shownWeeks = weeksInMonth(localDate);
-            Map<LocalDate, List<Termin>> allDatesOfMonth = getMonthMapByKalenderId(kalenderId, localDate);
-            
-            Map<Integer, Map<LocalDate, List<Termin>>> monthWithDates = new TreeMap<>();
-            
-            for()
-            
-            
-            
-        }
+//        public Map<Integer, Map<LocalDate, List<Termin>>> monthWithDates (Long kalenderId,LocalDate localDate) {
+//            Map<Integer, List<LocalDate>> shownWeeks = weeksInMonth(localDate);
+//            Map<LocalDate, List<Termin>> allDatesOfMonth = getMonthMapByKalenderId(kalenderId, localDate);
+//            
+//            Map<Integer, Map<LocalDate, List<Termin>>> monthWithDates = new TreeMap<>();
+//            
+//            for()
+//            
+//            
+//            
+//        }
 }

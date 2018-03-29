@@ -5,6 +5,7 @@
  */
 package icali.javaee.ejb;
 
+import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
@@ -26,5 +27,10 @@ public class KategorieBean extends EntityBean<Kategorie, Long> {
         return this.em.createQuery("SELECT c FROM Kategorie c ORDER BY c.kategorieName").getResultList();
     }
     
+    public List<Kalender> findCategoriesByKalenderId(Kalender kalender) {
+        return em.createQuery("SELECT k FROM Kategorie k WHERE k.kategorieKalender = :kalender ORDER BY k.kategorieName")
+                .setParameter("kalender", kalender)
+                .getResultList();
+    }
     
 }
