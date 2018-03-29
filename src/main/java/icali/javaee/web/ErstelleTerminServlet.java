@@ -51,26 +51,18 @@ public class ErstelleTerminServlet extends HttpServlet {
             throws ServletException, IOException {
         
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("kalender", this.kalenderBean.findByUsername(this.benutzerBean.getCurrentBenutzer().getUsername()));
-        //request.setAttribute("kategories", this.kategorieBean.findCategoriesByKalenderId(kalender));
+        List<Kalender> kalenderList = this.kalenderBean.findByUser(this.benutzerBean.getCurrentBenutzer());
+        request.setAttribute("kalender", kalenderList);
         
-
-        // Zu bearbeitende Aufgabe einlesen
-        HttpSession session = request.getSession();
-
-        Termin termin = this.getRequestedTermin(request);
-        request.setAttribute("edit", termin.getTerminId() != 0);
-                                
-        if (session.getAttribute("termin_form") == null) {
-            // Keine Formulardaten mit fehlerhaften Daten in der Session,
-            // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("termin_form", this.erstelleTerminForm(termin));
+        if(request.getParameter("kalender") != null){
+            String kalenderId = request.getParameter("kalender");
+            Kalender currentKalender = this.kalenderBean.findById(Long.parseLong(kalenderId));
+            request.setAttribute("kategories", this.kategorieBean.findCategoriesByKalenderId(currentKalender));
         }
-
+       
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/app/termin_edit.jsp").forward(request, response);
 
-        session.removeAttribute("termin_form");
     }
     
     @Override
@@ -111,7 +103,7 @@ public class ErstelleTerminServlet extends HttpServlet {
         String kalenderId = request.getParameter("termin_kalende");
         String kategorie = request.getParameter("termin_category");
 
-        Termin termin = this.getRequestedTermin(request);
+        Termin termin = new Termin();
         termin.setTerminTitel(terminTitel);
         termin.setTerminBeschreibung(beschreibung);
         
@@ -161,7 +153,7 @@ public class ErstelleTerminServlet extends HttpServlet {
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-            response.sendRedirect(WebUtils.appUrl(request, "/app/main"));
+            response.sendRedirect(WebUtils.appUrl(request, "/app/kalender/"));
         } else {
             // Fehler: Formuler erneut anzeigen
             FormValues formValues = new FormValues();
@@ -174,42 +166,12 @@ public class ErstelleTerminServlet extends HttpServlet {
             response.sendRedirect(request.getRequestURI());
         }
     }
-    
-    
-  private Termin getRequestedTermin(HttpServletRequest request) {
-        // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Termin termin = new Termin();
-        termin.setErsteller(this.benutzerBean.getCurrentBenutzer());
-     
-
-        // ID aus der URL herausschneiden
-        String terminId = request.getPathInfo();
-
-        if (terminId == null) {
-            terminId = "";
-        }
-
-        terminId = terminId.substring(1);
-
-        if (terminId.endsWith("/")) {
-            terminId = terminId.substring(0, terminId.length() - 1);
-        }
-
-        // Versuchen, den Datensatz mit der übergebenen ID zu finden
-        try {
-            termin = this.terminBean.findById(Long.parseLong(terminId));
-        } catch (NumberFormatException ex) {
-            // Ungültige oder keine ID in der URL enthalten
-        }
-
-        return termin;
-    }
   
    private void loescheTermin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Datensatz löschen
-        Termin termin = this.getRequestedTermin(request);
+        Termin termin = new Termin();
         this.terminBean.delete(termin);
 
         // Zurück zur Übersicht

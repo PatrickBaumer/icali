@@ -45,7 +45,6 @@ public class Termin implements Serializable{
     private String terminTitel;
     
     @Column(name = "t_ort")
-    @NotNull(message = "Bitte einen Ort angeben")
     private String terminOrt;
         
     @Column(name = "t_beschreibung")

@@ -5,6 +5,7 @@
  */
 package icali.javaee.ejb;
 
+import icali.javaee.jpa.Benutzer;
 import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
 import icali.javaee.jpa.Termin;
@@ -36,10 +37,10 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     public KalenderBean() {
         super(Kalender.class);
     }
-
-    public List<Kalender> findByUsername(String username) {
-        return em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList.username = :username ORDER BY k.kalenderTitel")
-                .setParameter("username", username)
+    // Der Befehl ist falsch!
+    public List<Kalender> findByUser(Benutzer user) {
+        return em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList = :user OR k.kalenderAdmin = :user ORDER BY k.kalenderTitel")
+                .setParameter("user", user)
                 .getResultList();
     }
 

@@ -37,14 +37,14 @@
             Termin erstellen
             <div id="m1">
                 <form method="POST" class="terminerstellen">
-                    <label for="termin_kalender">Kalender:</label>
+                    <label for="kalender">Kalender:</label>
                     <div class="side-by-side">
-                        <select name="termin_kalender">
+                        <select name="kalender">
                             <option value="">Keine Kalender</option>
 
-                            <c:forEach items="${kalender}" var="termin">
-                                <option value="${kalender.id}" ${task_form.values["termin_kalender"][0] == category.id ? 'selected' : ''}>
-                                    <c:out value="${kalender.name}" />
+                            <c:forEach items="${kalender}" var="kalender">
+                                <option value="${kalender.id}" ${termin_form.values["kalender"][0] == kalender.id ? 'selected' : ''}>
+                                    <c:out value="${kalender.kalenderTitel}" />
                                 </option>
                             </c:forEach>
                         </select>
