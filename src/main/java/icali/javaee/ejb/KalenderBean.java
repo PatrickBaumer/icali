@@ -38,9 +38,10 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
         super(Kalender.class);
     }
     // Der Befehl ist falsch!
-    public List<Kalender> findByUser(Benutzer user) {
-        return em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList = :user OR k.kalenderAdmin = :user ORDER BY k.kalenderTitel")
-                .setParameter("user", user)
+    public List<Kalender> findByUser(Benutzer benutzer) {
+        
+        return em.createQuery("SELECT k FROM Kalender k WHERE k.benutzerList = :benutzer OR k.kalenderAdmin = :benutzer ORDER BY k.kalenderTitel")
+                .setParameter("benutzer", benutzer)
                 .getResultList();
     }
 
@@ -55,7 +56,6 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
                 .setParameter("kalenderTitel", kalenderTitel)
                 .getResultList();
     }
-
     
     public LocalDate getCurrentLocalDate() {
         return LocalDate.now();

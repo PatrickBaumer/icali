@@ -51,6 +51,7 @@
                     </button>
                 </div>
             </form>
+                    <a href="<c:url value="/signup/"/>">Registrieren</a>
         </div>
     </jsp:attribute>
 </template:base>

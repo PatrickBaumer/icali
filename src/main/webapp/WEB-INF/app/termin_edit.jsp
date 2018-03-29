@@ -12,7 +12,7 @@
 <%@taglib tagdir="/WEB-INF/tags/templates" prefix="template"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
- 
+
 <template:base>
     <jsp:attribute name="title">
         Übersicht
@@ -40,13 +40,11 @@
                     <label for="kalender">Kalender:</label>
                     <div class="side-by-side">
                         <select name="kalender">
-                            <option value="">Keine Kalender</option>
+                                <option value="">Keine Kalender</option>
+                                <c:forEach items="${kalender}" var="kalender">
+                                    <option value="${kalender.id}">${kalender.kalenderTitel}</option>
+                                </c:forEach>
 
-                            <c:forEach items="${kalender}" var="kalender">
-                                <option value="${kalender.id}" ${termin_form.values["kalender"][0] == kalender.id ? 'selected' : ''}>
-                                    <c:out value="${kalender.kalenderTitel}" />
-                                </option>
-                            </c:forEach>
                         </select>
                     </div>
 

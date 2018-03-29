@@ -32,7 +32,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Patrick Baumer  
  */
-@WebServlet(urlPatterns = {"/app/erstelleTermin/"})
+@WebServlet(urlPatterns = {"/app/erstelleTermin/*"})
 public class ErstelleTerminServlet extends HttpServlet {
     
     @EJB
@@ -51,7 +51,7 @@ public class ErstelleTerminServlet extends HttpServlet {
             throws ServletException, IOException {
         
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        List<Kalender> kalenderList = this.kalenderBean.findByUser(this.benutzerBean.getCurrentBenutzer());
+        List<Kalender> kalenderList = this.benutzerBean.findAllKalenderByUser(this.benutzerBean.getCurrentBenutzer());
         request.setAttribute("kalender", kalenderList);
         
         if(request.getParameter("kalender") != null){
@@ -59,9 +59,20 @@ public class ErstelleTerminServlet extends HttpServlet {
             Kalender currentKalender = this.kalenderBean.findById(Long.parseLong(kalenderId));
             request.setAttribute("kategories", this.kategorieBean.findCategoriesByKalenderId(currentKalender));
         }
+        
+        HttpSession session = request.getSession();
+
+        Termin termin = new Termin();
+        if (session.getAttribute("termin_form") == null) {
+            // Keine Formulardaten mit fehlerhaften Daten in der Session,
+            // daher Formulardaten aus dem Datenbankobjekt übernehmen
+            request.setAttribute("termin_form", this.erstelleTerminForm(termin));
+        }
        
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/app/termin_edit.jsp").forward(request, response);
+        
+        session.removeAttribute("termin_form");
 
     }
     
@@ -182,9 +193,11 @@ public class ErstelleTerminServlet extends HttpServlet {
 private FormValues erstelleTerminForm(Termin termin) {
         Map<String, String[]> values = new HashMap<>();
 
-        values.put("termin_owner", new String[]{
-            termin.getErsteller().getUsername()
+        if (termin.getTerminInKalender()!= null) {
+        values.put("termin_kalender", new String[]{
+            termin.getTerminInKalender().getKalenderId().toString()
         });
+        }
 
         if (termin.getTerminKartegorie()!= null) {
             values.put("task_category", new String[]{
@@ -192,33 +205,74 @@ private FormValues erstelleTerminForm(Termin termin) {
             });
         }
 
+        if (termin.getStartDatum()!= null) {
         values.put("anfangsDatum", new String[]{
             WebUtils.formatDate((Date) termin.getStartDatum())
         });
+        }
 
+        if (termin.getStartUhrzeit()!= null) {
         values.put("anfangszeit", new String[]{
             WebUtils.formatTime(termin.getStartUhrzeit())
         });
+        }
         
+        if (termin.getEndeDatum()!= null) {
         values.put("endDatum", new String[]{
             WebUtils.formatDate((Date) termin.getEndeDatum())
         });
+        }
 
+        if (termin.getEndeUhrzeit()!= null) {
         values.put("endzeit", new String[]{
             WebUtils.formatTime(termin.getEndeUhrzeit())
         });
+        }
 
+        if (termin.getTerminTitel()!= null) {
         values.put("terminTitel", new String[]{
-            termin.getTerminTitel().toString()
+            termin.getTerminTitel()
         });
+        }
 
+        if (termin.getTerminBeschreibung()!= null) {
         values.put("beschreibung", new String[]{
             termin.getTerminBeschreibung()
         });
+        }
 
 
         FormValues formValues = new FormValues();
         formValues.setValues(values);
         return formValues;
+    }
+
+private Termin getRequestedTermin(HttpServletRequest request) {
+        // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
+        Termin termin = new Termin();
+        termin.setErsteller(this.benutzerBean.getCurrentBenutzer());
+
+
+        // ID aus der URL herausschneiden
+        String terminId = request.getPathInfo();
+
+        if (terminId == null) {
+            terminId = "";
+        }
+
+        terminId = terminId.substring(1);
+
+        if (terminId.endsWith("/")) {
+            terminId = terminId.substring(0, terminId.length() - 1);
+        }
+
+        // Versuchen, den Datensatz mit der übergebenen ID zu finden
+        try {
+            termin = this.terminBean.findById(Long.parseLong(terminId));
+        } catch (NumberFormatException ex) {
+            // Ungültige oder keine ID in der URL enthalten
+        }
+
+        return termin;
     }
 }

@@ -6,6 +6,8 @@
 package icali.javaee.ejb;
 
 import icali.javaee.jpa.Benutzer;
+import icali.javaee.jpa.Kalender;
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.ejb.EJBContext;
@@ -29,6 +31,10 @@ public class BenutzerBean extends EntityBean<Benutzer, Long> {
 
     public Benutzer getCurrentBenutzer() {
         return this.em.find(Benutzer.class, this.ctx.getCallerPrincipal().getName());
+    }
+    
+    public List<Kalender> findAllKalenderByUser (Benutzer benutzer) {
+        return benutzer.getKalenderList();
     }
 
     public void signup(String username, String password, String vunname, String email) throws UserAlreadyExistsException {

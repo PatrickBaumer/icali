@@ -9,6 +9,7 @@ import icali.javaee.ejb.BenutzerBean;
 import icali.javaee.ejb.KalenderBean;
 import icali.javaee.ejb.KategorieBean;
 import icali.javaee.ejb.ValidationBean;
+import icali.javaee.jpa.Benutzer;
 import icali.javaee.jpa.Farbe;
 import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
@@ -99,6 +100,11 @@ public class ErstellenKalenderServlet extends HttpServlet {
         kalender.setKalenderAdmin(this.benutzerBean.getCurrentBenutzer());
        
         kalender.setPassword(password1);
+        List<Benutzer> benutzerList = new ArrayList<>();
+        benutzerList.add(this.benutzerBean.getCurrentBenutzer());
+        kalender.setBenutzerList(benutzerList);
+        
+        
         
         List<Kategorie> kategorieList = new ArrayList<>();
         
@@ -121,6 +127,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
         
         if(errors.isEmpty()){
             this.kalenderBean.saveNew(kalender);
+            this.benutzerBean.getCurrentBenutzer().getKalenderList().add(kalender);
             response.sendRedirect(WebUtils.appUrl(request, "/app/kalender/"));
         }else{
             // fehlermeldung popup

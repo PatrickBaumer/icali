@@ -194,6 +194,22 @@ public class Benutzer implements Serializable{
         this.vunname = vunname;
     }
 
+    public List<Kalender> getKalenderList() {
+        return kalenderList;
+    }
+
+    public void setKalenderList(List<Kalender> kalenderList) {
+        this.kalenderList = kalenderList;
+    }
+
+    public List<Termin> getTerminList() {
+        return terminList;
+    }
+
+    public void setTerminList(List<Termin> terminList) {
+        this.terminList = terminList;
+    }
+
     public String getEmail() {
         return email;
     }
