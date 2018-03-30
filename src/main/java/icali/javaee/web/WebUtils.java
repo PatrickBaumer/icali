@@ -16,6 +16,9 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class WebUtils {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-    public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     /**
      * Stellt sicher, dass einer URL der Kontextpfad der Anwendung vorangestellt
@@ -67,11 +70,10 @@ public class WebUtils {
      * @param input Eingegebener String
      * @return Datumsobjekt oder null bei einem Fehler
      */
-    public static Date parseDate(String input) {
+    
+        public static Date parseDate(String input) {
         try {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = df.parse(input);
-//            java.util.Date date = DATE_FORMAT.parse(input);
+            java.util.Date date = DATE_FORMAT.parse(input);
             return new Date(date.getTime());
         } catch (ParseException ex) {
             return null;
@@ -84,11 +86,10 @@ public class WebUtils {
      * @param input Eingegebener String
      * @return Uhrzeitobjekt oder null bei einem Fehler
      */
-    public static Time parseTime(String input) {
+
+        public static Time parseTime(String input) {
         try {
-            DateFormat df = new SimpleDateFormat("hh:mm");
-            java.util.Date date = df.parse(input);
-//            java.util.Date date = TIME_FORMAT.parse(input);
+            java.util.Date date = TIME_FORMAT.parse(input);
             return new Time(date.getTime());
         } catch (ParseException ex) {
             return null;

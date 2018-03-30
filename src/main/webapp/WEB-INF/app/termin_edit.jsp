@@ -45,18 +45,18 @@
                             </c:if>
 
                             <c:forEach items="${kalender}" var="kalender">
-                                <option value="${kalender.kalenderId}">${kalender.kalenderTitel}</option>
+                                <option value="${kalender.getKalenderId()}">${kalender.kalenderTitel}</option>
                             </c:forEach>
                         </select>
                     </div>
 
                     <div id="m1"><input type="text" name="terminTitel" value="" placeholder="Terminname"/></div> 
                     <div id="m1"><input type="date" name="anfangsDatum" value="" placeholder="AnfangsDatum"/>
-                        <input type="time" name="anfangszeit" value="" placeholder="anfangszeit"/>
+                        <input type="time" name="anfangsZeit" value="" placeholder="anfangszeit"/>
                     </div>
                     <div id="m1">
                         <input type="date" name="endDatum" value="" placeholder="EndDatum"/>
-                        <input type="time" name="endzeit" value="" placeholder="Endzeit"/>
+                        <input type="time" name="endZeit" value="" placeholder="Endzeit"/>
                     </div>
                     <div id="terminBeschreibung">
                         <textarea name="beschreibung" value="" placeholder="Beschreibung"></textarea>

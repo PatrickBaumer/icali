@@ -78,7 +78,7 @@ public class Termin implements Serializable{
     Benutzer ersteller = null;
     
     @OneToOne (mappedBy = "katkategorieTermin")
-    Kategorie terminKartegorie = null;  
+    Kategorie terminKategorie = null;  
     
     
     

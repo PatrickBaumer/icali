@@ -46,6 +46,7 @@ public class ErstelleTerminServlet extends HttpServlet {
     @EJB
     KalenderBean kalenderBean;
     
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -106,25 +107,31 @@ public class ErstelleTerminServlet extends HttpServlet {
         List<String> errors = new ArrayList<>();
 
         String terminTitel = request.getParameter("terminTitel");
-        Date anfangsDatum = WebUtils.parseDate(request.getParameter("anfangsDatum"));
-        Time anfangszeit = WebUtils.parseTime(request.getParameter("anfangszeit"));
-        Date endDatum = WebUtils.parseDate(request.getParameter("endDatum"));
-        Time endzeit = WebUtils.parseTime(request.getParameter("endzeit"));
+        String anfangsdatum = request.getParameter("anfangsDatum");
+        String anfangszeit = request.getParameter("anfangsZeit");
+        String enddatum = request.getParameter("endDatum");
+        String endzeit = request.getParameter("endZeit");
         String beschreibung = request.getParameter("beschreibung");
         String kalenderId = request.getParameter("termin_kalende");
         String kategorie = request.getParameter("termin_category");
-
+        
+        
         Termin termin = new Termin();
         termin.setTerminTitel(terminTitel);
         termin.setTerminBeschreibung(beschreibung);
         
         if (kategorie != null && !kategorie.trim().isEmpty()) {
             try {
-                termin.setTerminKartegorie(this.kategorieBean.findById(Long.parseLong(kategorie)));
+                termin.setTerminKategorie(this.kategorieBean.findById(Long.parseLong(kategorie)));
             } catch (NumberFormatException ex) {
                 // Ungültige oder keine ID mitgegeben
             }
         }
+        
+        Date anfangsDatum = WebUtils.parseDate(anfangsdatum);
+        Time anfangsZeit = WebUtils.parseTime(anfangszeit);
+        Date endDatum = WebUtils.parseDate(enddatum);
+        Time endZeit = WebUtils.parseTime(endzeit);
  
         if (anfangsDatum != null) {
             termin.setStartDatum(anfangsDatum);
@@ -132,8 +139,8 @@ public class ErstelleTerminServlet extends HttpServlet {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
-        if (anfangszeit != null) {
-            termin.setStartUhrzeit(anfangszeit);
+        if (anfangsZeit != null) {
+            termin.setStartUhrzeit(anfangsZeit);
         } else { 
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }   
@@ -144,8 +151,8 @@ public class ErstelleTerminServlet extends HttpServlet {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
-        if (endzeit != null) {
-            termin.setEndeUhrzeit(endzeit);
+        if (endZeit != null) {
+            termin.setEndeUhrzeit(endZeit);
         } else { 
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
@@ -154,7 +161,7 @@ public class ErstelleTerminServlet extends HttpServlet {
 
         // Datensatz speichern
         if (errors.isEmpty()) {
-            this.terminBean.saveNew(termin);
+            this.terminBean.update(termin);
             Kalender kalender = this.kalenderBean.findById(Long.parseLong(kalenderId));
             List<Termin> terminList = new ArrayList<>(kalender.getTerminList());
             terminList.add(termin);
@@ -167,7 +174,7 @@ public class ErstelleTerminServlet extends HttpServlet {
             formValues.setErrors(errors);
 
             HttpSession session = request.getSession();
-            session.setAttribute("task_form", formValues);
+            session.setAttribute("termin_form", formValues);
 
             response.sendRedirect(request.getRequestURI());
         }
@@ -194,9 +201,9 @@ private FormValues erstelleTerminForm(Termin termin) {
         });
         }
 
-        if (termin.getTerminKartegorie()!= null) {
+        if (termin.getTerminKategorie()!= null) {
             values.put("task_category", new String[]{
-                termin.getTerminKartegorie().toString()
+                termin.getTerminKategorie().toString()
             });
         }
 
@@ -242,32 +249,5 @@ private FormValues erstelleTerminForm(Termin termin) {
         return formValues;
     }
 
-private Termin getRequestedTermin(HttpServletRequest request) {
-        // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Termin termin = new Termin();
-        termin.setErsteller(this.benutzerBean.getCurrentBenutzer());
 
-
-        // ID aus der URL herausschneiden
-        String terminId = request.getPathInfo();
-
-        if (terminId == null) {
-            terminId = "";
-        }
-
-        terminId = terminId.substring(1);
-
-        if (terminId.endsWith("/")) {
-            terminId = terminId.substring(0, terminId.length() - 1);
-        }
-
-        // Versuchen, den Datensatz mit der übergebenen ID zu finden
-        try {
-            termin = this.terminBean.findById(Long.parseLong(terminId));
-        } catch (NumberFormatException ex) {
-            // Ungültige oder keine ID in der URL enthalten
-        }
-
-        return termin;
-    }
 }

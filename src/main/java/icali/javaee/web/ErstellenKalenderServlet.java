@@ -103,6 +103,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
         List<Benutzer> benutzerList = new ArrayList<>();
         benutzerList.add(this.benutzerBean.getCurrentBenutzer());
         kalender.setBenutzerList(benutzerList);
+        benutzerBean.getCurrentBenutzer().getKalenderList().add(kalender);
         
         
         
@@ -141,7 +142,7 @@ public class ErstellenKalenderServlet extends HttpServlet {
 
         // Datensatz löschen
         // zum löschen muss die benötigte kalenderId aus der jsp ausgelesen werden
-        Kalender kalender = this.kalenderBean.findByKalenderId(1L);
+        Kalender kalender = this.kalenderBean.findById(1L);
         this.kalenderBean.delete(kalender);
 
         // Zurück zur Übersicht

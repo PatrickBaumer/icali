@@ -45,11 +45,6 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
                 .getResultList();
     }
 
-    public Kalender findByKalenderId(Long kalenderId) {
-        return (Kalender) em.createQuery("SELECT k FROM Kalender k WHERE k.kalenderId = :kalenderId ORDER BY k.kalenderTitel")
-                .setParameter("kalenderId", kalenderId)
-                .getSingleResult();
-    }
 
     public List<Kalender> findByKalenderTitel(String kalenderTitel) {
         return em.createQuery("SELECT k FROM Kalender k WHERE k.kalenderTitel = :kalender ORDER BY k.kalenderTitel")
@@ -206,7 +201,7 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
         for (int i = 0; i < 7; i++) {
             List<Termin> terminByDayList = new ArrayList<>();
             
-            for (Termin termin : findByKalenderId(kalenderId).getTerminList()) {
+            for (Termin termin : findById(kalenderId).getTerminList()) {
                 LocalDate startDatum = termin.getStartDatum().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
                 if (getMonday(localDate).plusDays(i).isEqual(startDatum)) {
@@ -336,7 +331,7 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
             List<Termin> terminByDayList = new ArrayList<>();
             LocalDate dayOfMonth = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), i);
                 
-            for (Termin termin : findByKalenderId(kalenderId).getTerminList()) {
+            for (Termin termin : findById(kalenderId).getTerminList()) {
                 LocalDate startDatum = termin.getStartDatum().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
                 if (dayOfMonth.isEqual(startDatum)) {
