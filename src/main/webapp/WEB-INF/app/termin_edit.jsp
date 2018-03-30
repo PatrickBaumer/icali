@@ -40,11 +40,13 @@
                     <label for="kalender">Kalender:</label>
                     <div class="side-by-side">
                         <select name="kalender">
+                            <c:if test="${kalender.isEmpty()}">
                                 <option value="">Keine Kalender</option>
-                                <c:forEach items="${kalender}" var="kalender">
-                                    <option value="${kalender.id}">${kalender.kalenderTitel}</option>
-                                </c:forEach>
+                            </c:if>
 
+                            <c:forEach items="${kalender}" var="kalender">
+                                <option value="${kalender.kalenderId}">${kalender.kalenderTitel}</option>
+                            </c:forEach>
                         </select>
                     </div>
 
@@ -57,7 +59,7 @@
                         <input type="time" name="endzeit" value="" placeholder="Endzeit"/>
                     </div>
                     <div id="terminBeschreibung">
-                        <textarea name="beschreibung" value="" placeholder="Beschreibung">Beschreibung</textarea>
+                        <textarea name="beschreibung" value="" placeholder="Beschreibung"></textarea>
 
                     </div>
 
@@ -74,7 +76,7 @@
                         </select>
                     </div>
             </div>
-            <div><button  type="submit" value="save">Erstellen</button></div>
+            <div><button name="action" type="submit" value="save">Erstellen</button></div>
         </form>
     </div>
 </jsp:attribute>

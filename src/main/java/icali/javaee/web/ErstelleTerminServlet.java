@@ -145,7 +145,7 @@ public class ErstelleTerminServlet extends HttpServlet {
         }
 
         if (endzeit != null) {
-            termin.setEndeDatum(endDatum);
+            termin.setEndeUhrzeit(endzeit);
         } else { 
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
@@ -154,16 +154,11 @@ public class ErstelleTerminServlet extends HttpServlet {
 
         // Datensatz speichern
         if (errors.isEmpty()) {
-            this.terminBean.update(termin);
+            this.terminBean.saveNew(termin);
             Kalender kalender = this.kalenderBean.findById(Long.parseLong(kalenderId));
             List<Termin> terminList = new ArrayList<>(kalender.getTerminList());
             terminList.add(termin);
             kalender.setTerminList(terminList);
-        }
-
-        // Weiter zur nächsten Seite
-        if (errors.isEmpty()) {
-            // Keine Fehler: Startseite aufrufen
             response.sendRedirect(WebUtils.appUrl(request, "/app/kalender/"));
         } else {
             // Fehler: Formuler erneut anzeigen

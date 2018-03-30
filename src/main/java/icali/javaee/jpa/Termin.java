@@ -7,7 +7,7 @@ package icali.javaee.jpa;
 
 import java.io.Serializable;
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,12 +27,12 @@ import lombok.Setter;
  *
  * @author Patrick Baumer
  */
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Entity
 public class Termin implements Serializable{
 
     @Id

@@ -11,11 +11,13 @@ package icali.javaee.web;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import javax.ejb.Local;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -67,7 +69,9 @@ public class WebUtils {
      */
     public static Date parseDate(String input) {
         try {
-            java.util.Date date = DATE_FORMAT.parse(input);
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date = df.parse(input);
+//            java.util.Date date = DATE_FORMAT.parse(input);
             return new Date(date.getTime());
         } catch (ParseException ex) {
             return null;
@@ -82,7 +86,9 @@ public class WebUtils {
      */
     public static Time parseTime(String input) {
         try {
-            java.util.Date date = TIME_FORMAT.parse(input);
+            DateFormat df = new SimpleDateFormat("hh:mm");
+            java.util.Date date = df.parse(input);
+//            java.util.Date date = TIME_FORMAT.parse(input);
             return new Time(date.getTime());
         } catch (ParseException ex) {
             return null;
