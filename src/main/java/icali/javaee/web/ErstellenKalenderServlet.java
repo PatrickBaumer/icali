@@ -13,6 +13,7 @@ import icali.javaee.jpa.Benutzer;
 import icali.javaee.jpa.Farbe;
 import icali.javaee.jpa.Kalender;
 import icali.javaee.jpa.Kategorie;
+import icali.javaee.jpa.Termin;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -126,6 +127,10 @@ public class ErstellenKalenderServlet extends HttpServlet {
         
         kalender.setKalenderTitel(kalenderTitel);
         kalender.setBeschreibung(kalenderBeschreibung);
+        List<Termin> terminList = new ArrayList<>();
+        kalender.setTerminList(terminList);
+        
+        
         
         if (password1 != null && password2 != null && !password1.equals(password2)) {
             errors.add("Die beiden Passwörter stimmen nicht überein.");

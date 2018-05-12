@@ -80,3 +80,7 @@ body {font-family: Verdana, sans-serif;}
     .weekdays li, .days li {width: 12.2%;}
 }
 
+caption {
+    text-align: center;
+}
+

@@ -17,19 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 /**
  *
  * @author Patrick Baumer
  */
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
 public class Kategorie implements Serializable{
 
     @Id
@@ -56,6 +50,49 @@ public class Kategorie implements Serializable{
     public Kategorie( String kategorieName, Farbe kategorieFarbe) {
         this.kategorieName = kategorieName;
         this.kategorieFarbe = kategorieFarbe;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getKategorieName() {
+        return kategorieName;
+    }
+
+    public void setKategorieName(String kategorieName) {
+        this.kategorieName = kategorieName;
+    }
+
+    public Farbe getKategorieFarbe() {
+        return kategorieFarbe;
+    }
+
+    public void setKategorieFarbe(Farbe kategorieFarbe) {
+        this.kategorieFarbe = kategorieFarbe;
+    }
+
+    public Termin getKatkategorieTermin() {
+        return katkategorieTermin;
+    }
+
+    public void setKatkategorieTermin(Termin katkategorieTermin) {
+        this.katkategorieTermin = katkategorieTermin;
+    }
+
+    public Kalender getKategorieKalender() {
+        return kategorieKalender;
+    }
+
+    public void setKategorieKalender(Kalender kategorieKalender) {
+        this.kategorieKalender = kategorieKalender;
+    }
+
+    public Kategorie() {
     }
     
     

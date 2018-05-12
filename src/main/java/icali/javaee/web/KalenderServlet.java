@@ -7,10 +7,14 @@ package icali.javaee.web;
 
 import icali.javaee.ejb.BenutzerBean;
 import icali.javaee.ejb.KalenderBean;
+import icali.javaee.jpa.Benutzer;
 import icali.javaee.jpa.Kalender;
+import icali.javaee.jpa.Termin;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,40 +67,82 @@ public class KalenderServlet extends HttpServlet {
          * 
          * 
          */
-        LocalDate[][] monatsKalender = kalenderBean.weeksInMonth(this.kalenderBean.getLocalDate());
+        Benutzer benutzer = this.benutzerBean.getCurrentBenutzer();
+        List<Kalender> kList = this.benutzerBean.findAllKalenderByUser(benutzer);
+        List<Termin> tList = new ArrayList<>();
         
-        LocalDate[] week1 = new LocalDate[7];
-        LocalDate[] week2 = new LocalDate[7];
-        LocalDate[] week3 = new LocalDate[7];
-        LocalDate[] week4 = new LocalDate[7];
-        LocalDate[] week5 = new LocalDate[7];
-        LocalDate[] week6 = new LocalDate[7];
+        //alle Termine in eine Liste
+        for (Kalender hilfK : kList) {
+            tList.addAll(hilfK.getTerminList());
+        }
         
-        for (int i= 0; i < monatsKalender.length; i++) {
-            switch (i) {
-            case 0:
-                System.arraycopy(monatsKalender[i], 0, week1, 0, 7);
-                break;
-            case 1: 
-                System.arraycopy(monatsKalender[i], 0, week2, 0, 7);
-                break;            
-            case 2: 
-                System.arraycopy(monatsKalender[i], 0, week3, 0, 7);
-                break;
-            case 3: 
-                System.arraycopy(monatsKalender[i], 0, week4, 0, 7);
-                break;
-            case 4: 
-                System.arraycopy(monatsKalender[i], 0, week5, 0, 7);
-                break;
-            case 5: 
-                System.arraycopy(monatsKalender[i], 0, week6, 0, 7);
-                break;
-            default:
-                break;
+        //Nur Termine des jeweiligen Monats in eine Liste
+        List<Termin> monatsList = new ArrayList<>();
+        for (Termin hilfsTermin : tList) {
+            if (hilfsTermin.getStartDatum().toLocalDate().getMonthValue() == this.kalenderBean.getLocalDate().getMonthValue() && hilfsTermin.getStartDatum().toLocalDate().getYear() == this.kalenderBean.getLocalDate().getYear()) {
+                monatsList.add(hilfsTermin);
             }
         }
-        List<Kalender> sidebar_kalender = this.benutzerBean.findAllKalenderByBenutzer(this.benutzerBean.getCurrentBenutzer().getUsername());
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        LocalDate[][] monatsKalender = kalenderBean.weeksInMonth(this.kalenderBean.getLocalDate());
+        
+        Map<LocalDate,List<Termin>> week1 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 0);
+        Map<LocalDate,List<Termin>> week2 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 1);
+        Map<LocalDate,List<Termin>> week3 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 2);
+        Map<LocalDate,List<Termin>> week4 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 3);
+        Map<LocalDate,List<Termin>> week5 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 4);
+        Map<LocalDate,List<Termin>> week6 = kalenderBean.weeksInMonthForWeek(monatsKalender,monatsList, 5);
+        
+
+      
+        
+        
+//        LocalDate[] week1 = new LocalDate[7];
+//        LocalDate[] week2 = new LocalDate[7];
+//        LocalDate[] week3 = new LocalDate[7];
+//        LocalDate[] week4 = new LocalDate[7];
+//        LocalDate[] week5 = new LocalDate[7];
+//        LocalDate[] week6 = new LocalDate[7];
+//        
+//        
+//        
+//        for (int i= 0; i < monatsKalender.length; i++) {
+//            switch (i) {
+//            case 0:
+//                System.arraycopy(monatsKalender[i], 0, week1, 0, 7);
+//                break;
+//            case 1: 
+//                System.arraycopy(monatsKalender[i], 0, week2, 0, 7);
+//                break;            
+//            case 2: 
+//                System.arraycopy(monatsKalender[i], 0, week3, 0, 7);
+//                break;
+//            case 3: 
+//                System.arraycopy(monatsKalender[i], 0, week4, 0, 7);
+//                break;
+//            case 4: 
+//                System.arraycopy(monatsKalender[i], 0, week5, 0, 7);
+//                break;
+//            case 5: 
+//                System.arraycopy(monatsKalender[i], 0, week6, 0, 7);
+//                break;
+//            default:
+//                break;
+//            }
+//        }
+
+
+        List<Kalender> sidebar_kalender = this.benutzerBean.findAllKalenderByUser(this.benutzerBean.getCurrentBenutzer());
         
         request.setAttribute("mk_activated", true);
         request.setAttribute("sidebar_kalender",sidebar_kalender);

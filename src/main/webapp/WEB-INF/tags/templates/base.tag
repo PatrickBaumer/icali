@@ -68,6 +68,11 @@
                                 <a href="<c:url value="/app/kalenderSuchen/"/>"> <i class="placeholder_search"></i> Kalendergruppen suchen </a>
                             </li>
 
+                           
+                                <c:if test="${sidebar_kalender.isEmpty()}">
+                                    <li><i class="placeholder_search"></i><b>Kein Kalender</b></li>
+                                </c:if>
+                            
                             <c:forEach var="sidebar_kalender" items="${sidebar_kalender}">
                                 <li>
                                     <a href="<c:url value="/app/gruppenkalender/${sidebar_kalender.getKalenderTitel()}/"/>"><i class="placeholder_search"></i>${sidebar_kalender.getKalenderTitel()}</a>

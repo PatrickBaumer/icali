@@ -7,9 +7,12 @@ package icali.javaee.web;
 
 import icali.javaee.ejb.BenutzerBean;
 import icali.javaee.ejb.KalenderBean;
+import icali.javaee.jpa.Benutzer;
 import icali.javaee.jpa.Kalender;
+import icali.javaee.jpa.Termin;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -49,13 +52,39 @@ public class WochenkalenderServlet extends HttpServlet {
             default:
                 break;
         } 
+        
+        Benutzer benutzer = this.benutzerBean.getCurrentBenutzer();
+        List<Kalender> kList = this.benutzerBean.findAllKalenderByUser(benutzer);
+        List<Termin> tList = new ArrayList<>();
+        
+        //alle Termine in eine Liste
+        for (Kalender hilfK : kList) {
+            tList.addAll(hilfK.getTerminList());
+        }
+        
+        //Nur Termine des jeweiligen Monats in eine Liste
+        List<Termin> monatsList = new ArrayList<>();
+        for (Termin hilfsTermin : tList) {
+            if (hilfsTermin.getStartDatum().toLocalDate().getMonthValue() == this.kalenderBean.getLocalDate().getMonthValue() && hilfsTermin.getStartDatum().toLocalDate().getYear() == this.kalenderBean.getLocalDate().getYear()) {
+                monatsList.add(hilfsTermin);
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
         request.setAttribute("mk_activated", false);
         List<Kalender> sidebar_kalender = this.benutzerBean.findAllKalenderByBenutzer(this.benutzerBean.getCurrentBenutzer().getUsername());       
         request.setAttribute("sidebar_kalender",sidebar_kalender);
+        
+        
         request.setAttribute("shown_month", this.kalenderBean.getMonthName());
         request.setAttribute("week_of_year", this.kalenderBean.getWeekOfYear());
         request.setAttribute("shown_year", this.kalenderBean.getYear());
-        request.setAttribute("week",kalenderBean.shownWeek(kalenderBean.getLocalDate()));
+        request.setAttribute("week",kalenderBean.weekWithTermin(kalenderBean.getLocalDate(), monatsList));
         request.getRequestDispatcher("/WEB-INF/app/week_calendar.jsp").forward(request, response);
 
     }

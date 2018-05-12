@@ -41,14 +41,14 @@
 
     <jsp:attribute name="content">
         <div id="hauptfenster">
-                    <c:choose>
-                        <c:when test="${edit}">
-                            <div><h2>Termin bearbeiten</h2></div>
-                        </c:when>
-                        <c:otherwise>
-                            <div><h2>Termin erstellen</h2></div>
-                        </c:otherwise>
-                    </c:choose>
+            <c:choose>
+                <c:when test="${edit}">
+                    <div><h2>Termin bearbeiten</h2></div>
+                </c:when>
+                <c:otherwise>
+                    <div><h2>Termin erstellen</h2></div>
+                </c:otherwise>
+            </c:choose>
 
             <div id="m1">
                 <form method="POST" class="terminerstellen">
@@ -65,10 +65,15 @@
                                 </option>
                             </c:forEach>
                         </select>
+
+                          <c:if test="${!readonly}">  
+                            <button class="icon-pencil" type="submit" name="action" value="choose">
+                                Kalender wählen
+                            </button>
+                          </c:if>
+                          
                             
-                            <c:if test="${!edit}">
-                                <div><input type="submit" value="Kalender wählen"></div>
-                            </c:if>                        
+                        <c:if test="${gewaehlt or readonly}">
                     </div>
 
                     <div id="m1"><input type="text" name="terminTitel" value="${termin_form.values['terminTitel'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Terminname"/></div> 
@@ -87,39 +92,40 @@
                     <label for="termin_category" ${readonly ? 'readonly="readonly"' : ''}>Kategorie:</label>
                     <div class="side-by-side">
                         <select name="termin_category" >
-                            <option value="">Keine Kategorie</option>
-
+                            <c:if test="${categories.isEmpty()}">
+                                <option value="">Keine Kategorie</option>
+                            </c:if>
                             <c:forEach items="${categories}" var="category">
                                 <option value="${category.id}" ${termin_form.values["termin_category"][0] == category.id ? 'selected' : ''}>
-                                    <c:out value="${category.kategorieName}" />
+                                    <c:out value="${category.getKategorieName()}" />
                                 </option>
                             </c:forEach>
                         </select>
                     </div>
             </div>
-                 
-               <c:if test="${!readonly}">
-                    <div class="side-by-side">
-                        <button class="icon-pencil" type="submit" name="action" value="save">
-                            Sichern
-                        </button>
 
-                        <c:if test="${edit}">
-                            <button class="icon-trash" type="submit" name="action" value="delete">
-                                Löschen
-                            </button>
-                        </c:if>
-                    </div>
-                </c:if>
-            
-            <c:if test="${!empty termin_form.errors}">
-                    <ul class="errors">
-                        <c:forEach items="${termin_form.errors}" var="error">
-                            <li>${error}</li>
-                            </c:forEach>
-                    </ul>
+            <c:if test="${!readonly}">
+                <div class="side-by-side">
+                    <button class="icon-pencil" type="submit" name="action" value="save">
+                        Sichern
+                    </button>
+
+                    <c:if test="${edit}">
+                        <button class="icon-trash" type="submit" name="action" value="delete">
+                            Löschen
+                        </button>
+                    </c:if>
+                </div>
             </c:if>
-            
+         </c:if>           
+            <c:if test="${!empty termin_form.errors}">
+                <ul class="errors">
+                    <c:forEach items="${termin_form.errors}" var="error">
+                        <li>${error}</li>
+                        </c:forEach>
+                </ul>
+            </c:if>
+
         </form>
     </div>
 </jsp:attribute>

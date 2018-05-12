@@ -267,6 +267,48 @@ public class KalenderBean extends EntityBean<Kalender, String> {
         }
         return shownWeek;
     }
+        
+    public Map<LocalDate,List<Termin>> weeksInMonthForWeek(LocalDate[][] monthArray, List<Termin> terminListe, int weekNr) {
+                Map<LocalDate, List<Termin>> monthMap = new TreeMap<>();
+        
+            for (int j = 0; j < monthArray[weekNr].length; j++) {
+            List<Termin> terminByDayList = new ArrayList<>();
+            LocalDate dayOfMonth = monthArray[weekNr][j];
+                
+            for (Termin termin : terminListe) {
+                LocalDate startDatum = termin.getStartDatum().toLocalDate();
+                
+                if (dayOfMonth.isEqual(startDatum)) {
+                    terminByDayList.add(termin);
+                }
+            }
+            monthMap.put(dayOfMonth, terminByDayList);
+        }
+        
+        return monthMap;
+    }
+    
+    public Map<LocalDate, List<Termin>> weekWithTermin (LocalDate localDate, List<Termin> termine) {
+        Map<LocalDate, List<Termin>> weekMap = new TreeMap<>();
+        LocalDate[] localDates = shownWeek(localDate);
+        
+        for (int i = 0; i<localDates.length; i++) {
+            List<Termin> terminByDayList = new ArrayList<>();
+            LocalDate dayOfMonth = localDates[i];
+            
+            for (Termin termin : termine) {
+                LocalDate startDatum = termin.getStartDatum().toLocalDate();
+                
+                if(dayOfMonth.isEqual(startDatum)) {
+                    terminByDayList.add(termin);
+                }
+            }
+            weekMap.put(dayOfMonth, terminByDayList);
+        }
+        return weekMap;
+    }
+        
+
 
     public LocalDate getMonday(LocalDate localDate) {
         DayOfWeek dayOfWeek = localDate.getDayOfWeek();
@@ -329,6 +371,7 @@ public class KalenderBean extends EntityBean<Kalender, String> {
         return shownWeeks;
     }
 
+
     public Map<LocalDate, String> shownMonthRepresentation(LocalDate localDate) {
         Map<LocalDate, String> shownMonthsMap = new TreeMap<>();
 
@@ -367,6 +410,28 @@ public class KalenderBean extends EntityBean<Kalender, String> {
         }
         return monthMap;
     }
+    
+        public Map<LocalDate, List<Termin>> getMonthMapByTerminListe(List<Termin> terminListe, LocalDate localDate, LocalDate[][] monthArray) {
+        Map<LocalDate, List<Termin>> monthMap = new TreeMap<>();
+        for (int i = 0; i <= monthArray.length; i++) {
+            for (int j = 0; j <= monthArray[i].length; j++) {
+            List<Termin> terminByDayList = new ArrayList<>();
+            LocalDate dayOfMonth = monthArray[i][j];
+                
+            for (Termin termin : terminListe) {
+                LocalDate startDatum = termin.getStartDatum().toLocalDate();
+                
+                if (dayOfMonth.isEqual(startDatum)) {
+                    terminByDayList.add(termin);
+                }
+            }
+            monthMap.put(dayOfMonth, terminByDayList);
+        }
+        }
+        return monthMap;
+    }
+    
+    
     
 //        public Map<Integer, List<LocalDate>> weeksInMonth(LocalDate localDate) {
 //        Map<LocalDate, String> shownMonthsMap = shownMonthRepresentation(localDate.withDayOfMonth(1));
