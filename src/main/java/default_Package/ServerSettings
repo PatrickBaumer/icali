@@ -1,5 +1,5 @@
 
-Netbeans-> Services -> Galssfish -> ViewAdminConsole
+Netbeans-> Services -> Glassfish -> ViewAdminConsole
 -> Configurations -> Security -> Realms -> neu anlegen
 und Daten eintragen
 
@@ -14,3 +14,4 @@ Group Table User Name Column:  username
 Group Name Column:  groupname
 Password Encryption Algorithm: SHA-256
 Assign Groups:      icali-app-user 
+

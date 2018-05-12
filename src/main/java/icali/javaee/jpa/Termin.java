@@ -18,20 +18,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.Size;
+
 
 /**
  *
  * @author Patrick Baumer
  */
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 public class Termin implements Serializable{
 
@@ -42,17 +37,12 @@ public class Termin implements Serializable{
     
     @Column(name = "t_titel")
     @NotNull(message = "Bitte geben Sie einen Terminnnamen ein")
+    @Size(min = 1, max = 50, message = "Die Bezeichnung muss zwischen ein und 50 Zeichen lang sein.")
     private String terminTitel;
-    
-    @Column(name = "t_ort")
-    private String terminOrt;
         
     @Column(name = "t_beschreibung")
     @Lob
     private String terminBeschreibung;
-    
-    @Column(name = "t_erinnerung")
-    private Boolean terminErinnerung;
     
     @Column(name = "t_start_uhrzeit")
     @NotNull(message = "Bitte eine Anfangsuhrzeit angeben")
@@ -72,13 +62,117 @@ public class Termin implements Serializable{
     
     
     @ManyToOne(fetch = FetchType.LAZY)
-    Kalender terminInKalender = null;
+    private Kalender terminInKalender = null;
     
     @OneToOne
-    Benutzer ersteller = null;
+    private Benutzer ersteller = null;
     
     @OneToOne (mappedBy = "katkategorieTermin")
-    Kategorie terminKategorie = null;  
+    private Kategorie terminKategorie = null;  
+
+    public Long getTerminId() {
+        return terminId;
+    }
+
+    public void setTerminId(Long terminId) {
+        this.terminId = terminId;
+    }
+
+    public String getTerminTitel() {
+        return terminTitel;
+    }
+
+    public void setTerminTitel(String terminTitel) {
+        this.terminTitel = terminTitel;
+    }
+
+    public String getTerminBeschreibung() {
+        return terminBeschreibung;
+    }
+
+    public void setTerminBeschreibung(String terminBeschreibung) {
+        this.terminBeschreibung = terminBeschreibung;
+    }
+
+    public Time getStartUhrzeit() {
+        return startUhrzeit;
+    }
+
+    public void setStartUhrzeit(Time startUhrzeit) {
+        this.startUhrzeit = startUhrzeit;
+    }
+
+    public Date getStartDatum() {
+        return startDatum;
+    }
+
+    public void setStartDatum(Date startDatum) {
+        this.startDatum = startDatum;
+    }
+
+    public Time getEndeUhrzeit() {
+        return endeUhrzeit;
+    }
+
+    public void setEndeUhrzeit(Time endeUhrzeit) {
+        this.endeUhrzeit = endeUhrzeit;
+    }
+
+    public Date getEndeDatum() {
+        return endeDatum;
+    }
+
+    public void setEndeDatum(Date endeDatum) {
+        this.endeDatum = endeDatum;
+    }
+
+    public Kalender getTerminInKalender() {
+        return terminInKalender;
+    }
+
+    public void setTerminInKalender(Kalender terminInKalender) {
+        this.terminInKalender = terminInKalender;
+    }
+
+    public Benutzer getErsteller() {
+        return ersteller;
+    }
+
+    public void setErsteller(Benutzer ersteller) {
+        this.ersteller = ersteller;
+    }
+
+    public Kategorie getTerminKategorie() {
+        return terminKategorie;
+    }
+
+    public void setTerminKategorie(Kategorie terminKategorie) {
+        this.terminKategorie = terminKategorie;
+    }
+    
+    
+
+    public Termin(Long terminId, String terminTitel, String terminBeschreibung, Time startUhrzeit, Date startDatum, Time endeUhrzeit, Date endeDatum) {
+        this.terminId = terminId;
+        this.terminTitel = terminTitel;
+        this.terminBeschreibung = terminBeschreibung;
+        this.startUhrzeit = startUhrzeit;
+        this.startDatum = startDatum;
+        this.endeUhrzeit = endeUhrzeit;
+        this.endeDatum = endeDatum;
+    }
+    
+    public Termin (String terminTitel, String terminBeschreibung, Time startUhrzeit, Date startDatum, Time endeUhrzeit, Date endeDatum) {
+        this.terminTitel = terminTitel;
+        this.terminBeschreibung = terminBeschreibung;
+        this.startUhrzeit = startUhrzeit;
+        this.startDatum = startDatum;
+        this.endeUhrzeit = endeUhrzeit;
+        this.endeDatum = endeDatum;
+    }
+
+    public Termin() {
+    }
     
     
     

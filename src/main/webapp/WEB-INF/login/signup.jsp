@@ -24,11 +24,6 @@
         <link rel="stylesheet" href="<c:url value="/css/login.css"/>" />
     </jsp:attribute>
 
-    <jsp:attribute name="menu">
-        <div class="menuitem">
-            <a href="<c:url value="/logout/"/>">Einloggen</a>
-        </div>
-    </jsp:attribute>
 
     <jsp:attribute name="content">
         <div class="container">
@@ -38,6 +33,8 @@
                     <input type="hidden" name="csrf_token" value="${csrf_token}">
 
                     <%-- Eingabefelder --%>
+                    <div><h2>Registrierung</h2></div>
+                    
                     <label for="signup_username">
                         Benutzername:
                         <span class="required">*</span>
@@ -61,21 +58,13 @@
                     <div class="side-by-side">
                         <input type="password" name="signup_password2" value="${signup_form.values["signup_password2"][0]}">
                     </div>
-                     <%-- ANSCHRIFT--%>
-                    <div><h2>Benutzername</h2></div>
+
                     <label for="signup_vunname">
                         Vor- und Nachname:
                         <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="signup_vunname" value="${signup_form.values["signup_vunname"][0]}">
-                    </div>
-                    <label for="signup_email">
-                        E-Mail:
-                        <span class="required">*</span>
-                    </label>
-                    <div class="side-by-side">
-                       <input type="text" name="signup_email" value="${signup_form.values["signup_email"][0]}">
                     </div>
                     <%-- Button zum Abschicken --%>
                     <div class="side-by-side">
@@ -84,6 +73,7 @@
                         </button>
                     </div>
                 </div>
+                <a href="<c:url value="/logout/"/>">Einloggen</a>
 
                 <%-- Fehlermeldungen --%>
                 <c:if test="${!empty signup_form.errors}">

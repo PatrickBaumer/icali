@@ -42,27 +42,17 @@ import lombok.NoArgsConstructor;
 public class Benutzer implements Serializable{
     
 
-    public Benutzer(String username, String password, String vunname, String email) {
-        this.username = username;
-        this.password.password = password;
-        this.passwordHash = this.hashPassword(password);
-        this.vunname = vunname;
-        this.email = email;
-    }
     public Benutzer(String username, String password, String vunname) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
         this.vunname = vunname;
-        this.email = "";
-       
     }
         public Benutzer(String username, String password) {
         this.username = username;
         this.password.password = password;
         this.passwordHash = this.hashPassword(password);
         this.vunname = "";
-        this.email = "";
     }
         
     private static final long serialVersionUID = 1L;
@@ -78,10 +68,10 @@ public class Benutzer implements Serializable{
     @NotNull(message = "Der Benutzername darf nicht leer sein.")
     private String username;
     
-    @ManyToMany (mappedBy = "benutzerList", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToMany (mappedBy = "benutzerList", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     List<Kalender> kalenderList = new ArrayList<>();
     
-    @OneToMany (mappedBy = "ersteller", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany (mappedBy = "ersteller", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     List<Termin> terminList = new ArrayList<>();
     
   
@@ -107,11 +97,6 @@ public class Benutzer implements Serializable{
     @Column (name = "VUNNAME")
     @NotNull(message = "Vor- und Nachname darf nicht leer sein.")
     private String vunname;
-     
-    @Column (name = "EMAIL")
-    @Pattern(regexp = "(\\w|\\W)*@(\\w|\\W)*.(\\w|\\W){1,4}", message ="Die E-Mail muss muster@muster.de")
-    @NotNull (message = "E-Mail-Adresse darf nicht leer sein.")
-    private String email;
  
     private String hashPassword(String password) {
         byte[] hash;
@@ -208,13 +193,5 @@ public class Benutzer implements Serializable{
 
     public void setTerminList(List<Termin> terminList) {
         this.terminList = terminList;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

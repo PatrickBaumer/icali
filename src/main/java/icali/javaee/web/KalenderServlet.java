@@ -5,15 +5,19 @@
  */
 package icali.javaee.web;
 
+import icali.javaee.ejb.BenutzerBean;
 import icali.javaee.ejb.KalenderBean;
+import icali.javaee.jpa.Kalender;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,6 +28,9 @@ public class KalenderServlet extends HttpServlet {
     
     @EJB
     KalenderBean kalenderBean;
+    
+    @EJB
+    BenutzerBean benutzerBean;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -89,6 +96,10 @@ public class KalenderServlet extends HttpServlet {
                 break;
             }
         }
+        List<Kalender> sidebar_kalender = this.benutzerBean.findAllKalenderByBenutzer(this.benutzerBean.getCurrentBenutzer().getUsername());
+        
+        request.setAttribute("mk_activated", true);
+        request.setAttribute("sidebar_kalender",sidebar_kalender);
         request.setAttribute("shown_month", this.kalenderBean.getMonthName());
         request.setAttribute("shown_year", this.kalenderBean.getYear());
         request.setAttribute("week1",week1);

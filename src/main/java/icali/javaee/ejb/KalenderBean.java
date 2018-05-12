@@ -29,7 +29,7 @@ import java.util.TreeMap;
  */
 @Stateless
 @RolesAllowed("icali-app-user")
-public class KalenderBean extends EntityBean<Kalender, Long> {
+public class KalenderBean extends EntityBean<Kalender, String> {
 
     private LocalDate date = LocalDate.now();
     private LocalTime time = LocalTime.now();
@@ -46,11 +46,36 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     }
 
 
+    
+
     public List<Kalender> findByKalenderTitel(String kalenderTitel) {
-        return em.createQuery("SELECT k FROM Kalender k WHERE k.kalenderTitel = :kalender ORDER BY k.kalenderTitel")
+        return em.createQuery("SELECT k FROM Kalender k WHERE k.kalenderTitel = :kalenderTitel ORDER BY k.kalenderTitel")
                 .setParameter("kalenderTitel", kalenderTitel)
                 .getResultList();
     }
+    
+
+    
+    public Kalender findByKalender (Kalender kalender) {
+        return (Kalender)em.createQuery("SELECT k from Kalender k WHERE k = :kalender")
+                .setParameter("kalender", kalender)
+                .getSingleResult();
+    }
+    
+    
+    
+        public class KalenderAlreadyExistsException extends Exception {
+
+        public KalenderAlreadyExistsException(String message) {
+            super(message);
+        }
+    }
+        
+        public void kalenderTry (String kalenderTitel) throws KalenderAlreadyExistsException {
+            if (em.find(Kalender.class, kalenderTitel) != null) {
+                throw new KalenderAlreadyExistsException("Der Kalendername $K ist bereits vergeben.".replace("$K", kalenderTitel));      
+            }
+        }
     
     public LocalDate getCurrentLocalDate() {
         return LocalDate.now();
@@ -189,19 +214,19 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
 
     // Mapping für die Terminausgabe
     /**
-     * @param kalenderId
+     * @param kalenderTitel
      * @param localDate
      * @return weekMap -> eine Map mit den LocalDate Tag und eine Liste mit Terminen zu
      * diesem Tag als Value mapping Tag & dazugehörigen Termine
      *
      */
 
-    public Map<LocalDate, List<Termin>> getWeekMapByKalenderId(Long kalenderId, LocalDate localDate) {
+    public Map<LocalDate, List<Termin>> getWeekMapByKalenderId(String kalenderTitel, LocalDate localDate) {
         Map<LocalDate, List<Termin>> weekMap = new TreeMap<>();
         for (int i = 0; i < 7; i++) {
             List<Termin> terminByDayList = new ArrayList<>();
             
-            for (Termin termin : findById(kalenderId).getTerminList()) {
+            for (Termin termin : findById(kalenderTitel).getTerminList()) {
                 LocalDate startDatum = termin.getStartDatum().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
                 if (getMonday(localDate).plusDays(i).isEqual(startDatum)) {
@@ -319,19 +344,19 @@ public class KalenderBean extends EntityBean<Kalender, Long> {
     }
     
         /**
-     * @param kalenderId
+     * @param kalenderTitel
      * @param localDate
      * @return weekMap -> eine Map mit den LocalDate Tag und eine Liste mit Terminen zu
      * diesem Tag als Value mapping Tag & dazugehörigen Termine
      *
      */
-    public Map<LocalDate, List<Termin>> getMonthMapByKalenderId(Long kalenderId, LocalDate localDate) {
+    public Map<LocalDate, List<Termin>> getMonthMapByKalenderId(String kalenderTitel, LocalDate localDate) {
         Map<LocalDate, List<Termin>> monthMap = new TreeMap<>();
         for (int i = 1; i <=localDate.lengthOfMonth(); i++) {
             List<Termin> terminByDayList = new ArrayList<>();
             LocalDate dayOfMonth = LocalDate.of(localDate.getYear(), localDate.getMonthValue(), i);
                 
-            for (Termin termin : findById(kalenderId).getTerminList()) {
+            for (Termin termin : findById(kalenderTitel).getTerminList()) {
                 LocalDate startDatum = termin.getStartDatum().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 
                 if (dayOfMonth.isEqual(startDatum)) {

@@ -35,6 +35,8 @@
     </head>
     <body>
         <%-- Kopfbereich --%>
+        <jsp:invoke fragment="menu"/>
+        <%-- Sidebar--%>
         <header>
 
             <c:if test="${not empty pageContext.request.userPrincipal}">
@@ -44,27 +46,36 @@
 
                     <div class="menu-list">
                         <ul id="menu-content" class="menu-content collapse out">
-                            <li>
-                                <a href="<c:url value="/app/wochenansicht/"/>"> <i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>                              
-                            </li>
+                            <c:choose>
+                                <c:when test="${mk_activated}">
+                                    <li>
+                                        <a href="<c:url value="/app/wochenansicht/"/>"> <i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>                              
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li>
+                                        <a href="<c:url value="/app/kalender/"/>"> <i class="placeholder_switch"></i> Wochenansicht / Monatsansicht </a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                             <li>
                                 <a href="<c:url value="/app/erstelleTermin/"/>"> <i class="placeholder_create_date"></i> Termin erstellen </a>
                             </li>
                             <li>
-                                <a href="<c:url value="/app/erstelleKalender/"/>"> <i class="placeholder_create_cal"></i> Kalender erstellen </a>
-                            </li>  
-                            <li data-toggle="collapse" data-target="#new" class="collapsed">
-                                <a href="#"> <i class="placeholder_search"></i> Kalendergruppen suchen </a>
+                                <a href="<c:url value="/app/gruppenkalender/new/"/>"> <i class="placeholder_create_cal"></i> Kalender erstellen </a>
+                            </li> 
+                            <li>
+                                <a href="<c:url value="/app/kalenderSuchen/"/>"> <i class="placeholder_search"></i> Kalendergruppen suchen </a>
                             </li>
-                            
-                            <ul class="sub-menu collapse" id="new">
-                                <li>New New 1</li>
-                                <li>New New 2</li>
-                                <li>New New 3</li>
-                            </ul>
+
+                            <c:forEach var="sidebar_kalender" items="${sidebar_kalender}">
                                 <li>
-                                    <a href="<c:url value="/logout/"/>" class="icon-logout"> <i class="placeholder_logout"></i> Logout ${pageContext.request.userPrincipal} </a>
+                                    <a href="<c:url value="/app/gruppenkalender/${sidebar_kalender.getKalenderTitel()}/"/>"><i class="placeholder_search"></i>${sidebar_kalender.getKalenderTitel()}</a>
                                 </li>
+                            </c:forEach>
+                            <li>
+                                <a href="<c:url value="/logout/"/>" class="icon-logout"> <i class="placeholder_logout"></i> Logout ${pageContext.request.userPrincipal} </a>
+                            </li>
                         </ul>
                     </div>
                 </c:if>

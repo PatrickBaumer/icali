@@ -22,16 +22,11 @@
         <link rel="stylesheet" href="<c:url value="/css/login.css"/>" />
     </jsp:attribute>
 
-    <jsp:attribute name="menu">
-        <div class="menuitem">
-            <a href="<c:url value="/signup/"/>">Registrieren</a>
-        </div>
-    </jsp:attribute>
-
     <jsp:attribute name="content">
         <div class="container">
             <form action="j_security_check" method="post" class="stacked">
                 <div class="column">
+                    <div><h2>Login</h2></div>
                     <%-- Eingabefelder --%>
                     <label for="j_username">
                         Benutzername:

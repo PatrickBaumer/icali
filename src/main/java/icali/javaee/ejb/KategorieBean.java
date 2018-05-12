@@ -27,8 +27,15 @@ public class KategorieBean extends EntityBean<Kategorie, Long> {
         return this.em.createQuery("SELECT c FROM Kategorie c ORDER BY c.kategorieName").getResultList();
     }
     
-    public List<Kalender> findCategoriesByKalenderId(Kalender kalender) {
-        return em.createQuery("SELECT k FROM Kategorie k WHERE k.kategorieKalender = :kalender ORDER BY k.kategorieName")
+    public List<Kategorie> findCategoriesByKalenderTitel(String kalenderTitel) {
+        return em.createQuery("SELECT k FROM Kategorie k WHERE k.kategorieKalender.kalenderTitel = :kalenderTitel ORDER BY k.id")
+                .setParameter("kalenderTitel", kalenderTitel)
+                .getResultList();
+    }
+    
+    public List<Kategorie> findByBeschreibung(String beschreibung, Kalender kalender) {
+        return this.em.createQuery("SELECT DISTINCT c FROM Kategorie c WHERE c.kategorieName = :beschreibung AND c.kategorieKalender = :kalender")
+                .setParameter("beschreibung", beschreibung)
                 .setParameter("kalender", kalender)
                 .getResultList();
     }

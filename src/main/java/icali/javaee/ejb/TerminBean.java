@@ -23,7 +23,7 @@ public class TerminBean extends EntityBean<Termin, Long> {
         super(Termin.class);
     }
 
-    public List<Termin> findByKalendarname(String kalendername) {
+    public List<Termin> findByKalendername(String kalendername) {
         return em.createQuery("SELECT t FROM Termin t WHERE t.terminInKalender.kalenderTitel = :kalendername ORDER BY t.startDatum, t.startUhrzeit")
                 .setParameter("kalendername", kalendername)
                 .getResultList();
@@ -35,14 +35,9 @@ public class TerminBean extends EntityBean<Termin, Long> {
                 .getResultList();
     }
     
-    public List<Termin> findByKalenderId(Long kalenderId) {
-        return em.createQuery("SELECT t FROM Termin t WHERE t.terminInKalender.kalenderId = :kalenderId ORDER BY t.startDatum, t.startUhrzeit")
-                .setParameter("kalenderId", kalenderId)
-                .getResultList();
-    }
     
     public List<Termin> findByKategorie (Kategorie terminKategorie){
-        return em.createQuery("SELECT t FROM Termin t WHERE t.terminKartegorie = :terminKategorie ORDER BY t.startDatum, t.startUhrzeit")
+        return em.createQuery("SELECT t FROM Termin t WHERE t.terminKategorie = :terminKategorie ORDER BY t.startDatum, t.startUhrzeit")
                 .setParameter("terminKategorie", terminKategorie)
                 .getResultList();
     }

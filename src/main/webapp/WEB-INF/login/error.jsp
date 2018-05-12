@@ -22,15 +22,10 @@
         <link rel="stylesheet" href="<c:url value="/css/login.css"/>" />
     </jsp:attribute>
 
-    <jsp:attribute name="menu">
-        <div class="menuitem">
-            <a href="<c:url value="/logout/"/>">Nochmal versuchen</a>
-        </div>
-    </jsp:attribute>
-
     <jsp:attribute name="content">
         <p>
             Das hat leider nicht geklappt. 🐻
         </p>
+        <a href="<c:url value="/logout/"/>">Nochmal versuchen</a>
     </jsp:attribute>
 </template:base>

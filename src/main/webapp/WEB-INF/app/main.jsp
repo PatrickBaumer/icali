@@ -21,7 +21,7 @@
 
 
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="<c:url value="/css/task_list.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/css/kalender_list.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/calendar.css"/>" />
     </jsp:attribute>
 

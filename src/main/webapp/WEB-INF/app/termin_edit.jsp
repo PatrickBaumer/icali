@@ -15,7 +15,14 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Übersicht
+        <c:choose>
+            <c:when test="${edit}">
+                Termin bearbeiten
+            </c:when>
+            <c:otherwise>
+                Termin erstellen
+            </c:otherwise>
+        </c:choose>
     </jsp:attribute>
 
 
@@ -34,49 +41,85 @@
 
     <jsp:attribute name="content">
         <div id="hauptfenster">
-            Termin erstellen
+                    <c:choose>
+                        <c:when test="${edit}">
+                            <div><h2>Termin bearbeiten</h2></div>
+                        </c:when>
+                        <c:otherwise>
+                            <div><h2>Termin erstellen</h2></div>
+                        </c:otherwise>
+                    </c:choose>
+
             <div id="m1">
                 <form method="POST" class="terminerstellen">
                     <label for="kalender">Kalender:</label>
                     <div class="side-by-side">
-                        <select name="kalender">
-                            <c:if test="${kalender.isEmpty()}">
+                        <select name="kalenderWahl" ${edit ? 'readonly="readonly"' : ''}>
+                            <c:if test="${allKalender.isEmpty()}">
                                 <option value="">Keine Kalender</option>
                             </c:if>
 
-                            <c:forEach items="${kalender}" var="kalender">
-                                <option value="${kalender.getKalenderId()}">${kalender.kalenderTitel}</option>
+                            <c:forEach items="${allKalender}" var="kalender">
+                                <option value="${kalender.kalenderTitel}"${termin_form.values["termin_kalender"][0] == kalender.kalenderTitel ? 'selected' : ''}>
+                                    <c:out value="${kalender.kalenderTitel}"/>
+                                </option>
                             </c:forEach>
                         </select>
+                            
+                            <c:if test="${!edit}">
+                                <div><input type="submit" value="Kalender wählen"></div>
+                            </c:if>                        
                     </div>
 
-                    <div id="m1"><input type="text" name="terminTitel" value="" placeholder="Terminname"/></div> 
-                    <div id="m1"><input type="date" name="anfangsDatum" value="" placeholder="AnfangsDatum"/>
-                        <input type="time" name="anfangsZeit" value="" placeholder="anfangszeit"/>
+                    <div id="m1"><input type="text" name="terminTitel" value="${termin_form.values['terminTitel'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Terminname"/></div> 
+                    <div id="m1"><input type="date" name="anfangsDatum" value="${termin_form.values['anfangsDatum'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Anfangsdatum"/>
+                        <input type="time" name="anfangsZeit" value="${termin_form.values['anfangsZeit'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Anfangszeit"/>
                     </div>
                     <div id="m1">
-                        <input type="date" name="endDatum" value="" placeholder="EndDatum"/>
-                        <input type="time" name="endZeit" value="" placeholder="Endzeit"/>
+                        <input type="date" name="endDatum" value="${termin_form.values['endDatum'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Enddatum"/>
+                        <input type="time" name="endZeit" value="${termin_form.values['endZeit'][0]}" ${readonly ? 'readonly="readonly"' : ''} placeholder="Endzeit"/>
                     </div>
                     <div id="terminBeschreibung">
-                        <textarea name="beschreibung" value="" placeholder="Beschreibung"></textarea>
+                        <input type="text" name="beschreibung" ${readonly ? 'readonly="readonly"' : ''} value="${termin_form.values['beschreibung'][0]}" placeholder="Beschreibung"></textarea>
 
                     </div>
 
-                    <label for="termin_category">Kategorie:</label>
+                    <label for="termin_category" ${readonly ? 'readonly="readonly"' : ''}>Kategorie:</label>
                     <div class="side-by-side">
-                        <select name="termin_category">
+                        <select name="termin_category" >
                             <option value="">Keine Kategorie</option>
 
                             <c:forEach items="${categories}" var="category">
                                 <option value="${category.id}" ${termin_form.values["termin_category"][0] == category.id ? 'selected' : ''}>
-                                    <c:out value="${category.name}" />
+                                    <c:out value="${category.kategorieName}" />
                                 </option>
                             </c:forEach>
                         </select>
                     </div>
             </div>
-            <div><button name="action" type="submit" value="save">Erstellen</button></div>
+                 
+               <c:if test="${!readonly}">
+                    <div class="side-by-side">
+                        <button class="icon-pencil" type="submit" name="action" value="save">
+                            Sichern
+                        </button>
+
+                        <c:if test="${edit}">
+                            <button class="icon-trash" type="submit" name="action" value="delete">
+                                Löschen
+                            </button>
+                        </c:if>
+                    </div>
+                </c:if>
+            
+            <c:if test="${!empty termin_form.errors}">
+                    <ul class="errors">
+                        <c:forEach items="${termin_form.errors}" var="error">
+                            <li>${error}</li>
+                            </c:forEach>
+                    </ul>
+            </c:if>
+            
         </form>
     </div>
 </jsp:attribute>

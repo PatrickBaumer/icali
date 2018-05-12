@@ -55,6 +55,10 @@ public class ValidationBean {
     public <T> List<String> validate(T object, List<String> messages) {
         Set<ConstraintViolation<T>> violations = this.validator.validate(object);
         
+        for(ConstraintViolation<T> violation : violations) {
+            messages.add(violation.getMessage());
+        }
+//        Alte Variante nur für >= Java8
 //        violations.forEach((ConstraintViolation<T> violation) -> {
 //            messages.add(violation.getMessage());
 //        });

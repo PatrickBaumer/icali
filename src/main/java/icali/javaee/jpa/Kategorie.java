@@ -51,7 +51,7 @@ public class Kategorie implements Serializable{
     Termin katkategorieTermin = null;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    Kalender kategorieKalender =null;
+    Kalender kategorieKalender = null;
 
     public Kategorie( String kategorieName, Farbe kategorieFarbe) {
         this.kategorieName = kategorieName;

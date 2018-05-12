@@ -13,6 +13,11 @@ Creative Commons Namensnennung 4.0 International Lizenz.
     margin-bottom: 1rem;
 }
 
+.search_and_result {
+        margin-left: 25%;
+}
+
+
 td, th {
     padding-right: 2em;
     text-align: left;
