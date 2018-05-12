@@ -1,0 +1,39 @@
+READ ME:
+
+Damit die Anwendung überhaupt funktioniert muss folgendes zuvor gemacht werden: 
+
+1. Benutzen Sie Netbeans
+2. Gehen Sie auf den Reiter: "Services"
+3. Unter Server finden Sie den "GlassFish Server"
+4. Rechtsklick auf den Glassfish und den Punkt "View Domain Admin Console" auswählen
+5. In der Admin-Konsole, dann auf "Configurations" --> "server-config" ausklappen
+6. Dann dort "Security" ausklappen und auf "Realms" klicken
+7. Jetzt mit "New..." einen neuen Realm anlegen
+8. Anschließend die unten aufgeführten Daten eingeben.
+
+Name:                           icali-app
+Class Name:                     ...JDBCRealm
+JAAS Context:                   jdbcRealm
+JNDI:                           jdbc/__default
+User Table:                     icali.icali_benutzer
+User Name Column:               username
+Password Column:                password_hash
+Group Table:                    icali.icali_benutzer_group
+Group Table User Name Column:   username
+Group Name Column:              groupname
+Password Encryption Algorithm:  SHA-256
+Assign Groups:                  icali-app-user
+
+9. Am Ende oben rechts auf "OK" klicken.
+10. Und schon ist es geschafft :)
+
+
+
+Zur Information:
+
+Es gibt einen Bug, wenn man einen Kalender anlegt/beitritt/verlässt muss man erst die Anwendung neu starten bevor die Änderung sichtbar wird.
+Klingt komisch ist aber so. :D
+
+Viele Grüße
+Ihr iCali-Team
+
